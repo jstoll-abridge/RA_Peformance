@@ -265,15 +265,9 @@
 </div>
 
 <script>
-(function(){
-  if(sessionStorage.getItem('ab_auth')==='ok'){
-    document.getElementById('pw-gate').style.display='none';
-  }
-})();
 function checkPw(){
-  const val=document.getElementById('pw-input').value;
-  if(val==='Abridge2026'){
-    sessionStorage.setItem('ab_auth','ok');
+  const val=document.getElementById('pw-input').value.trim();
+  if(val==='abridge2026'){
     document.getElementById('pw-gate').style.display='none';
   } else {
     const err=document.getElementById('pw-error');
