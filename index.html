@@ -300,6 +300,19 @@
 
     /* Three-yr strip */
     .three-yr-strip { font-size: 12px; }
+
+    /* Section 4 — ROI grid stays 3-col on mobile, just tighter */
+    #roi-year-grid { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
+    #roi-year-grid .roi-yr-header { padding: 7px 8px !important; }
+    #roi-year-grid .roi-yr-body { padding: 8px !important; }
+    #roi-year-grid .roi-yr-main { font-size: 22px !important; }
+    #roi-year-grid .roi-yr-val  { font-size: 12px !important; }
+    #roi-year-grid .roi-yr-sub  { font-size: 10px !important; }
+    #roi-year-grid .roi-yr-lbl  { font-size: 9px !important; }
+
+    /* Unit economics strip — wrap on mobile */
+    #unit-econ-strip { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+    #unit-econ-strip .ue-sep { display: none; }
   }
 
   /* ── SMALL PHONE (≤390px) ── */
@@ -705,141 +718,151 @@ function checkPw(){
     <div class="step-label">
       <div class="step-num" style="background:var(--green-dim);color:var(--green);">4</div>
       <div class="step-title" style="color:var(--green);">Value Delivered to Elevance</div>
-      <div class="step-sub">Y1 baseline · 200K MA lives · ROI Framework 2026.04.26</div>
+      <div class="step-sub">3-year view · applies to all years</div>
     </div>
 
-    <div class="two-col">
-
-      <!-- ── LEFT: Impact Summary ── -->
-      <div class="stat-card">
-
-        <!-- Header: label left, big lives count right -->
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:4px;">Y1 Impact Summary</div>
-          <div style="text-align:right;">
-            <div style="font-size:24px;font-weight:800;letter-spacing:-1px;line-height:1.1;">200,000</div>
-            <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-top:2px;">MA lives · Y1</div>
-          </div>
+    <!-- ── Unit Economics — shared, persists to all 3 years ── -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;">Unit Economics — Value per Closed HCC · applies to Y1 – Y3</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;color:var(--muted);">MA benchmark</span>
+          <span style="font-size:11px;color:var(--muted);">$</span>
+          <input type="number" id="raf-benchmark" class="rate-num" value="900" min="500" max="2000" step="10" style="width:62px;font-size:14px;">
+          <span style="font-size:11px;color:var(--muted);">PMPM</span>
         </div>
-
-        <!-- HCC pool derivation -->
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;">Addressable HCC Pool</div>
-          <div class="stat-row" style="padding:5px 0;">
-            <span class="stat-row-label">Avg HCCs per MA beneficiary</span>
-            <span class="stat-row-val">2.1</span>
-          </div>
-          <div class="stat-row" style="padding:5px 0;">
-            <span class="stat-row-label">Total HCCs in population</span>
-            <span class="stat-row-val">420,000</span>
-          </div>
-          <div class="stat-row" style="padding:5px 0;">
-            <span class="stat-row-label">% naturally closed by clinicians</span>
-            <span class="stat-row-val" id="roi-nat-closed">80%</span>
-          </div>
-          <div class="stat-row" style="padding:5px 0;border-bottom:none;">
-            <span class="stat-row-label" style="font-weight:600;color:var(--text);">Open HCCs — Abridge addressable pool</span>
-            <span class="stat-row-val" id="roi-open-hcc" style="font-size:16px;">84,000</span>
-          </div>
+        <div style="color:var(--subtle);font-size:14px;">×</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;color:var(--muted);">RAF coeff</span>
+          <input type="number" id="raf-coeff" class="rate-num" value="0.15" min="0.01" max="1.00" step="0.005" style="width:70px;font-size:14px;">
         </div>
-
-        <!-- Capture funnel rows -->
-        <div class="stat-row">
-          <span class="stat-row-label">% of open HCCs captured</span>
-          <span class="stat-row-val" id="roi-capture">27%</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-row-label">% validated in claims</span>
-          <span class="stat-row-val" id="roi-valid-pct">60%</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-row-label" style="font-weight:600;color:var(--text);">HCCs successfully closed</span>
-          <span class="stat-row-val" id="roi-closed" style="font-size:16px;">—</span>
-        </div>
-
-        <!-- Abridge cost — single line -->
-        <div class="stat-row">
-          <span class="stat-row-label">Abridge cost (Y1)</span>
-          <span class="stat-row-val" id="roi-abridge-full" style="font-size:14px;">—</span>
-        </div>
-
-        <!-- hidden legacy breakdown IDs to avoid JS errors -->
-        <span id="roi-a-mbrs-cnt" style="display:none;"></span>
-        <span id="roi-a-rate-disp" style="display:none;"></span>
-        <span id="roi-a-cost-disp" style="display:none;"></span>
-        <span id="roi-v-mbrs-cnt" style="display:none;"></span>
-        <span id="roi-v-rate-disp" style="display:none;"></span>
-        <span id="roi-v-cost-disp" style="display:none;"></span>
-
-        <!-- Value delivered ROI box -->
-        <div class="roi-box" id="roi-box">
+        <div style="color:var(--subtle);font-size:14px;">× 12 =</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-left:4px;">
           <div>
-            <div class="roi-box-label">Value delivered to Elevance (Y1)</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Per HCC / mo</div>
+            <div style="font-size:14px;font-weight:700;" id="raf-pmpm">$135</div>
           </div>
           <div>
-            <div class="roi-box-val" id="roi-val">—</div>
-            <div class="roi-box-mult" id="roi-mult">—</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Annualized / HCC</div>
+            <div style="font-size:20px;font-weight:800;letter-spacing:-0.5px;" id="raf-annual">$1,620</div>
           </div>
-        </div>
-
-        <!-- hidden legacy elements to avoid JS errors -->
-        <span id="roi-abridge-cost" style="display:none;"></span>
-        <span id="roi-box-sub" style="display:none;"></span>
-      </div>
-
-      <!-- ── RIGHT: Unit Economics + Chart ── -->
-      <div class="chart-card">
-
-        <!-- Unit economics assumptions -->
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;">Unit Economics — Value per Closed HCC</div>
-
-          <div class="stat-row" style="padding:5px 0;">
-            <span class="stat-row-label">Monthly MA benchmark (PMPM)</span>
-            <div style="display:flex;align-items:center;gap:4px;">
-              <span style="color:var(--muted);font-size:12px;">$</span>
-              <input type="number" id="raf-benchmark" class="rate-num" value="900" min="500" max="2000" step="10" style="width:68px;" title="Monthly capitation rate Elevance receives from CMS per MA member">
-            </div>
-          </div>
-          <div class="stat-row" style="padding:5px 0;">
-            <span class="stat-row-label">RAF coefficient per closed HCC</span>
-            <input type="number" id="raf-coeff" class="rate-num" value="0.2325" min="0.01" max="1.00" step="0.005" style="width:76px;" title="Average RAF score improvement per HCC closed (V28 model)">
-          </div>
-
-          <div style="border-top:1px solid var(--border);margin:8px 0 4px;"></div>
-
-          <div class="stat-row" style="padding:5px 0;">
-            <span class="stat-row-label" style="color:var(--muted);">PMPM value per closed HCC</span>
-            <span class="stat-row-val" id="raf-pmpm" style="font-size:13px;">$209</span>
-          </div>
-          <div class="stat-row" style="padding:6px 0;">
-            <span class="stat-row-label" style="font-weight:700;color:var(--text);">Annualized value per HCC</span>
-            <span class="stat-row-val" id="raf-annual" style="font-size:17px;font-weight:800;">$2,508</span>
-          </div>
-
-          <!-- Scale: unit × HCCs closed = total -->
-          <div style="border-top:1px solid var(--border);margin:10px 0 8px;"></div>
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px;">Scaled across addressable market</div>
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
-            <span style="font-size:13px;font-weight:700;color:var(--muted);" id="raf-annual-inline">$2,508</span>
-            <span style="color:var(--subtle);font-size:14px;">×</span>
-            <span style="font-size:13px;font-weight:700;" id="roi-hcc-count-disp">—</span>
-            <span style="color:var(--muted);font-size:11px;">HCCs closed</span>
-            <span style="color:var(--subtle);font-size:14px;">=</span>
-            <span style="font-size:20px;font-weight:800;letter-spacing:-0.5px;" id="roi-scale-total">—</span>
-          </div>
-          <div style="font-size:11px;color:var(--muted);">total value delivered to Elevance · Y1</div>
-        </div>
-
-        <div class="chart-card-title">Abridge Cost vs. Value to Elevance · Y1</div>
-        <div class="chart-wrap">
-          <canvas id="roiChart"></canvas>
-        </div>
-        <div class="chart-footnote" id="chart-footnote">
-          Benchmark <strong id="fn-benchmark" style="color:var(--text);">$900</strong> PMPM · RAF coeff <strong id="fn-coeff" style="color:var(--text);">0.2325</strong> · <strong id="fn-annual" style="color:var(--text);">$2,508</strong> annualized per HCC
         </div>
       </div>
     </div>
+
+    <!-- ── Single bar chart — mobile-optimised ── -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px 10px;margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;">Abridge Cost vs. Value to Elevance</div>
+      <div style="position:relative;height:160px;">
+        <canvas id="roiChart"></canvas>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:8px;">
+        Benchmark <strong id="fn-benchmark" style="color:var(--text);">$900</strong> PMPM · RAF <strong id="fn-coeff" style="color:var(--text);">0.15</strong> · <strong id="fn-annual" style="color:var(--text);">$1,620</strong> / HCC annualized
+      </div>
+    </div>
+
+    <!-- ── 3 compact ROI boxes ── -->
+    <div id="roi-year-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+
+      <!-- Y1 -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+        <div class="roi-yr-header" style="padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(96,165,250,0.05);">
+          <div class="roi-yr-lbl" style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y1 · 2026</div>
+          <div class="roi-yr-sub" style="font-size:10px;color:var(--muted);margin-top:1px;">200K MA lives</div>
+        </div>
+        <div class="roi-yr-body" style="padding:12px;">
+          <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y1-roi">—</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
+          <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y1-val">—</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
+          <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y1-cost">—</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">HCCs</div>
+          <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y1-closed">—</div>
+        </div>
+      </div>
+
+      <!-- Y2 -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+        <div class="roi-yr-header" style="padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(96,165,250,0.05);">
+          <div class="roi-yr-lbl" style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y2 · 2027</div>
+          <div class="roi-yr-sub" style="font-size:10px;color:var(--muted);margin-top:1px;">1.0M MA lives</div>
+        </div>
+        <div class="roi-yr-body" style="padding:12px;">
+          <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y2-roi">—</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
+          <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y2-val">—</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
+          <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y2-cost">—</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">HCCs</div>
+          <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y2-closed">—</div>
+        </div>
+      </div>
+
+      <!-- Y3 -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+        <div class="roi-yr-header" style="padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(96,165,250,0.05);">
+          <div class="roi-yr-lbl" style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y3 · 2028</div>
+          <div class="roi-yr-sub" style="font-size:10px;color:var(--muted);margin-top:1px;">1.9M MA lives</div>
+        </div>
+        <div class="roi-yr-body" style="padding:12px;">
+          <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y3-roi">—</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
+          <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y3-val">—</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
+          <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y3-cost">—</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">HCCs</div>
+          <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y3-closed">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 3-year total strip ── -->
+    <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);">3-Year Total</div>
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Value to Elevance</div>
+          <div style="font-size:20px;font-weight:800;letter-spacing:-0.5px;" id="roi-3yr-val">—</div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Abridge Cost</div>
+          <div style="font-size:16px;font-weight:700;color:var(--amber);" id="roi-3yr-cost">—</div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">HCCs Closed</div>
+          <div style="font-size:16px;font-weight:700;" id="roi-3yr-closed">—</div>
+        </div>
+        <div style="border-left:1px solid rgba(74,222,128,0.2);padding-left:24px;">
+          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">3-Year ROI</div>
+          <div style="font-size:26px;font-weight:800;letter-spacing:-1px;" id="roi-3yr-roi">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden legacy IDs -->
+    <span id="roi-closed" style="display:none;"></span>
+    <span id="roi-capture" style="display:none;"></span>
+    <span id="roi-valid-pct" style="display:none;"></span>
+    <span id="roi-abridge-full" style="display:none;"></span>
+    <span id="roi-a-mbrs-cnt" style="display:none;"></span>
+    <span id="roi-a-rate-disp" style="display:none;"></span>
+    <span id="roi-a-cost-disp" style="display:none;"></span>
+    <span id="roi-v-mbrs-cnt" style="display:none;"></span>
+    <span id="roi-v-rate-disp" style="display:none;"></span>
+    <span id="roi-v-cost-disp" style="display:none;"></span>
+    <span id="roi-nat-closed" style="display:none;"></span>
+    <span id="roi-open-hcc" style="display:none;"></span>
+    <span id="roi-val" style="display:none;"></span>
+    <span id="roi-mult" style="display:none;"></span>
+    <span id="roi-box" style="display:none;"></span>
+    <span id="roi-abridge-cost" style="display:none;"></span>
+    <span id="roi-box-sub" style="display:none;"></span>
+    <span id="raf-annual-inline" style="display:none;"></span>
+    <span id="roi-hcc-count-disp" style="display:none;"></span>
+    <span id="roi-scale-total" style="display:none;"></span>
   </div>
 
   <!-- ══ STEP 5: CAPTURE FUNNEL ══ -->
@@ -1018,6 +1041,7 @@ function recalc() {
   document.getElementById('y1-total').textContent  = fmtM(y1total);
 
   // ── Year 2 & 3: HCC-based (independent, each with own nat-closed slider) ──
+  let y2Cost=0, y2Closed=0, y3Cost=0, y3Closed=0;
   [{ key:'y2', lives:1000000 }, { key:'y3', lives:1900000 }].forEach(({ key, lives }) => {
     const totalHccsYr  = Math.round(lives * 2.1);
     const natClosed    = parseFloat(document.getElementById(key + '-nat-closed-slider').value) / 100;
@@ -1043,73 +1067,69 @@ function recalc() {
     document.getElementById(key + '-a-cost').textContent           = fmtM(aCost);
     document.getElementById(key + '-v-cost').textContent           = fmtM(vCost);
     document.getElementById(key + '-total').textContent            = fmtM(total);
+    if (key === 'y2') { y2Cost = total; y2Closed = hccsVal; }
+    else              { y3Cost = total; y3Closed = hccsVal; }
   });
   document.getElementById('total-3yr').textContent = fmtM(total3);
 
-  // ── ROI section ──
+  // ── Section 4: Unit Economics + 3-year value ──
   const openHccFmt = openHccs.toLocaleString();
   document.getElementById('strip-nat-closed').textContent = Math.round(y1NatClosedPct*100) + '%';
   document.getElementById('strip-open-hcc').textContent   = openHccFmt;
   document.getElementById('roi-nat-closed').textContent   = Math.round(y1NatClosedPct*100) + '%';
   document.getElementById('roi-open-hcc').textContent     = openHccFmt;
-  // Live Y1 ROI math — VALUE_PER_HCC derived from editable RAF assumptions
+
   const rafBenchmark  = parseFloat(document.getElementById('raf-benchmark').value) || 900;
   const rafCoeff      = parseFloat(document.getElementById('raf-coeff').value)     || 0.2325;
   const pmpmPerHcc    = rafBenchmark * rafCoeff;
   const VALUE_PER_HCC = pmpmPerHcc * 12;
 
-  // Update assumptions display
-  document.getElementById('raf-pmpm').textContent   = '$' + Math.round(pmpmPerHcc);
-  document.getElementById('raf-annual').textContent = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
-  document.getElementById('fn-benchmark').textContent = '$' + rafBenchmark;
-  document.getElementById('fn-coeff').textContent     = rafCoeff.toFixed(4);
-  document.getElementById('fn-annual').textContent    = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
+  document.getElementById('raf-pmpm').textContent      = '$' + Math.round(pmpmPerHcc);
+  document.getElementById('raf-annual').textContent    = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
+  document.getElementById('fn-benchmark').textContent  = '$' + rafBenchmark;
+  document.getElementById('fn-coeff').textContent      = rafCoeff.toFixed(4);
+  document.getElementById('fn-annual').textContent     = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
 
-  const hccsClosed   = Math.round(hccsCaptured * y1ValidPct);
-  const valueToElev  = hccsClosed * VALUE_PER_HCC;
-  const roiMultiple  = y1total > 0 ? valueToElev / y1total : 0;
-  const captureDisp  = Math.round(y1CapturePct * 100) + '%';
-  const validDisp    = Math.round(y1ValidPct * 100) + '%';
-  const abridgeCostM = (y1total / 1e6).toFixed(1);
-  const valueTotM    = (valueToElev / 1e6).toFixed(1);
+  // Per-year value calc
+  const y1Closed = Math.round(hccsCaptured * y1ValidPct);
+  const y1Val    = y1Closed  * VALUE_PER_HCC;
+  const y2Val    = y2Closed  * VALUE_PER_HCC;
+  const y3Val    = y3Closed  * VALUE_PER_HCC;
+  const totalClosed = y1Closed + y2Closed + y3Closed;
+  const totalCost   = y1total  + y2Cost   + y3Cost;
+  const totalVal    = y1Val    + y2Val    + y3Val;
 
-  // Left card — capture rows
-  document.getElementById('roi-capture').textContent    = captureDisp;
-  document.getElementById('roi-valid-pct').textContent  = validDisp;
-  document.getElementById('roi-closed').textContent     = fmtN(hccsClosed);
+  const roiY1 = y1total > 0 ? y1Val / y1total : 0;
+  const roiY2 = y2Cost  > 0 ? y2Val / y2Cost  : 0;
+  const roiY3 = y3Cost  > 0 ? y3Val / y3Cost  : 0;
+  const roi3yr = totalCost > 0 ? totalVal / totalCost : 0;
 
-  // Left card — Abridge cost breakdown (full dollars, unrounded)
-  document.getElementById('roi-a-mbrs-cnt').textContent  = fmtN(mbrAssessOnly);
-  document.getElementById('roi-a-rate-disp').textContent = Math.round(rates.aRate);
-  document.getElementById('roi-a-cost-disp').textContent = '$' + Math.round(y1aCost).toLocaleString();
-  document.getElementById('roi-v-mbrs-cnt').textContent  = fmtN(mbrValidated);
-  document.getElementById('roi-v-rate-disp').textContent = Math.round(rates.vRate);
-  document.getElementById('roi-v-cost-disp').textContent = '$' + Math.round(y1vCost).toLocaleString();
-  document.getElementById('roi-abridge-full').textContent = '$' + Math.round(y1total).toLocaleString();
+  // Update metrics table
+  const setROIColor = (id) => { document.getElementById(id).style.color = sc.cssVar; };
 
-  // Hidden legacy IDs (keep JS from erroring)
-  document.getElementById('roi-abridge-cost').textContent = '$' + abridgeCostM + 'M';
-  document.getElementById('roi-box-sub').textContent    = '';
+  document.getElementById('roi-y1-closed').textContent = fmtN(y1Closed);
+  document.getElementById('roi-y2-closed').textContent = fmtN(y2Closed);
+  document.getElementById('roi-y3-closed').textContent = fmtN(y3Closed);
+  document.getElementById('roi-3yr-closed').textContent = fmtN(totalClosed);
 
-  // Left card — value box
-  document.getElementById('roi-val').textContent        = '$' + valueTotM + 'M';
-  document.getElementById('roi-mult').textContent       = roiMultiple.toFixed(2) + '× ROI';
+  document.getElementById('roi-y1-cost').textContent = fmtM(y1total);
+  document.getElementById('roi-y2-cost').textContent = fmtM(y2Cost);
+  document.getElementById('roi-y3-cost').textContent = fmtM(y3Cost);
+  document.getElementById('roi-3yr-cost').textContent = fmtM(totalCost);
 
-  // Right card — scaled output
-  const annualFmt = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
-  document.getElementById('raf-annual-inline').textContent  = annualFmt;
-  document.getElementById('roi-hcc-count-disp').textContent = fmtN(hccsClosed);
-  document.getElementById('roi-scale-total').textContent    = '$' + valueTotM + 'M';
-  document.getElementById('roi-scale-total').style.color    = sc.cssVar;
-  document.getElementById('roi-val').style.color        = sc.cssVar;
-  document.getElementById('roi-mult').style.color       = sc.cssVar;
-  const box = document.getElementById('roi-box');
-  box.style.background = sc.boxBg;
-  box.style.border = '1px solid ' + sc.boxBorder;
-  box.style.borderRadius = '8px';
+  document.getElementById('roi-y1-val').textContent  = fmtM(y1Val);
+  document.getElementById('roi-y2-val').textContent  = fmtM(y2Val);
+  document.getElementById('roi-y3-val').textContent  = fmtM(y3Val);
+  document.getElementById('roi-3yr-val').textContent = fmtM(totalVal);
 
-  // Update chart with live values
-  updateChart(parseFloat(abridgeCostM), parseFloat(valueTotM), sc);
+  document.getElementById('roi-y1-roi').textContent  = roiY1.toFixed(1)  + '×';
+  document.getElementById('roi-y2-roi').textContent  = roiY2.toFixed(1)  + '×';
+  document.getElementById('roi-y3-roi').textContent  = roiY3.toFixed(1)  + '×';
+  document.getElementById('roi-3yr-roi').textContent = roi3yr.toFixed(1) + '×';
+  ['roi-y1-roi','roi-y2-roi','roi-y3-roi','roi-3yr-roi','roi-y1-val','roi-y2-val','roi-y3-val','roi-3yr-val'].forEach(setROIColor);
+
+  // Update chart
+  updateChart([y1total/1e6, y2Cost/1e6, y3Cost/1e6], [y1Val/1e6, y2Val/1e6, y3Val/1e6], sc);
 
   // ── Funnel ──
   const pop  = 200000;
@@ -1127,22 +1147,33 @@ function recalc() {
 
 }
 
-function updateChart(costM, valueM, sc) {
+function updateChart(costsM, valuesM, sc) {
   const colorMap = {
-    'var(--amber)': { full:'rgba(245,158,11,0.85)', dim:'rgba(245,158,11,0.18)' },
-    'var(--blue)':  { full:'rgba(96,165,250,0.85)',  dim:'rgba(96,165,250,0.18)'  },
-    'var(--green)': { full:'rgba(74,222,128,0.85)', dim:'rgba(74,222,128,0.18)' }
+    'var(--amber)': { full:'rgba(245,158,11,0.85)', dim:'rgba(245,158,11,0.22)' },
+    'var(--blue)':  { full:'rgba(96,165,250,0.85)',  dim:'rgba(96,165,250,0.22)'  },
+    'var(--green)': { full:'rgba(74,222,128,0.85)', dim:'rgba(74,222,128,0.22)' }
   };
   const c = colorMap[sc.cssVar];
+  const fmtTip = v => v >= 1000 ? '$' + (v/1000).toFixed(1) + 'B' : '$' + v.toFixed(1) + 'M';
 
   const data = {
-    labels: ['Abridge Cost (Y1)', 'Value to Elevance (Y1)'],
-    datasets: [{
-      data: [costM, valueM],
-      backgroundColor: [c.dim, c.full],
-      borderColor: [c.full, c.full],
-      borderWidth: 1, borderRadius: 5
-    }]
+    labels: ['Y1 · 200K', 'Y2 · 1.0M', 'Y3 · 1.9M'],
+    datasets: [
+      {
+        label: 'Abridge Cost',
+        data: costsM,
+        backgroundColor: 'rgba(245,158,11,0.3)',
+        borderColor: 'rgba(245,158,11,0.7)',
+        borderWidth: 1, borderRadius: 4
+      },
+      {
+        label: 'Value to Elevance',
+        data: valuesM,
+        backgroundColor: c.full,
+        borderColor: c.full,
+        borderWidth: 1, borderRadius: 4
+      }
+    ]
   };
 
   if (chart) {
@@ -1156,12 +1187,12 @@ function updateChart(costM, valueM, sc) {
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => '$' + ctx.raw + 'M' } }
+        legend: { display: true, labels: { color:'#8b949e', font:{ size:11 }, boxWidth:12, padding:16 } },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmtTip(ctx.raw) } }
       },
       scales: {
         x: { grid: { color:'rgba(255,255,255,0.04)' }, ticks: { color:'#8b949e', font:{ size:11, weight:'600' } } },
-        y: { grid: { color:'rgba(255,255,255,0.04)' }, ticks: { color:'#8b949e', font:{ size:11 }, callback: v => '$'+v+'M' }, beginAtZero: true }
+        y: { grid: { color:'rgba(255,255,255,0.04)' }, ticks: { color:'#8b949e', font:{ size:11 }, callback: v => v>=1000?'$'+(v/1000).toFixed(0)+'B':'$'+v+'M' }, beginAtZero: true }
       }
     }
   });
