@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elevance · Abridge Performance Model</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
 <style>
   :root {
     --bg: #0d1117;
@@ -230,12 +230,84 @@
   }
   .footer-note strong { color: var(--text); }
 
-  @media (max-width: 640px) {
-    .pricing-flow { flex-direction: column; }
-    .pricing-tier.equals { flex: none; }
+  /* ── TABLET ── */
+  @media (max-width: 860px) {
     .year-grid { grid-template-columns: 1fr; }
     .two-col   { grid-template-columns: 1fr; }
-    .rate-bar  { gap: 8px; }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    /* Step 1 pricing block */
+    .pricing-s1-wrap { flex-direction: column !important; }
+    .pricing-s1-wrap > div { border-right: none !important; border-top: 1px solid var(--border); }
+    .pricing-s1-wrap > div:first-child { border-top: none; }
+    .pricing-s1-wrap > div[style*="flex-shrink:0"] { display: none; } /* hide + separator */
+
+    body { padding: 20px 14px 60px; font-size: 13px; }
+    .page { max-width: 100%; }
+
+    /* Header */
+    .header { flex-direction: column; gap: 6px; margin-bottom: 24px; padding-bottom: 14px; }
+    .header-right { text-align: left; }
+    .logo { font-size: 16px; }
+
+    /* Step labels */
+    .step-label { flex-wrap: wrap; gap: 8px; }
+    .step-sub { margin-left: 0; width: 100%; font-size: 11px; }
+    .step-title { font-size: 12px; }
+    .section { margin-bottom: 28px; }
+
+    /* Scenario tabs — stack details on narrow screens */
+    .tab-btn { padding: 10px 8px; }
+    .tab-name { font-size: 9px; }
+    .tab-roi  { font-size: 17px; }
+    .tab-sub  { font-size: 9px; }
+
+    /* Year grid */
+    .year-grid { grid-template-columns: 1fr; gap: 12px; }
+    .year-lives { font-size: 18px; }
+
+    /* Two-col */
+    .two-col { grid-template-columns: 1fr; }
+
+    /* Tier pills */
+    .pill-right-cost { font-size: 14px; }
+
+    /* Rate bar */
+    .rate-bar { gap: 8px; flex-wrap: wrap; }
+    .rate-num { width: 60px; font-size: 13px; }
+
+    /* Pricing flow Step 1 — force column */
+    .pricing-flow { flex-direction: column; }
+    .pricing-tier.equals { flex: none; border-left: none; border-top: 1px solid var(--border); flex-direction: row; justify-content: center; gap: 16px; }
+    .pricing-tier + .pricing-tier { border-left: none; border-top: 1px solid var(--border); }
+    .tier-amount { font-size: 28px; }
+
+    /* ROI box */
+    .roi-box { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .roi-box-val { font-size: 24px; }
+
+    /* Chart */
+    .chart-wrap { height: 150px; }
+
+    /* Funnel — allow horizontal scroll */
+    .funnel-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .funnel-step { min-width: 68px; padding: 10px 6px; }
+    .funnel-step-val { font-size: 13px; }
+    .funnel-step-label { font-size: 9px; }
+    .funnel-arrow { flex: 0 0 12px; font-size: 11px; }
+
+    /* Three-yr strip */
+    .three-yr-strip { font-size: 12px; }
+  }
+
+  /* ── SMALL PHONE (≤390px) ── */
+  @media (max-width: 390px) {
+    body { padding: 16px 12px 50px; }
+    .tab-roi { font-size: 14px; }
+    .tab-btn { padding: 8px 6px; }
+    .year-lives { font-size: 16px; }
   }
 </style>
 </head>
@@ -243,7 +315,7 @@
 
 <!-- ── PASSWORD GATE ── -->
 <div id="pw-gate" style="position:fixed;inset:0;background:#ffffff;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <div style="width:380px;text-align:center;padding:48px 36px;background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.08);">
+  <div style="width:min(380px,calc(100vw - 40px));text-align:center;padding:clamp(28px,6vw,48px) clamp(20px,5vw,36px);background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.08);">
     <div style="margin-bottom:8px;display:flex;justify-content:center;">
       <svg width="180" height="54" viewBox="0 0 180 54" xmlns="http://www.w3.org/2000/svg">
         <rect width="180" height="54" fill="#E8001C" rx="6"/>
@@ -297,7 +369,7 @@ function checkPw(){
       <div class="step-sub">Two-tier · anchored to $7 PMPM × 12 = $84 PMPY</div>
     </div>
 
-    <div style="display:flex;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <div class="pricing-s1-wrap" style="display:flex;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
 
       <!-- PMPY anchor -->
       <div style="padding:16px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;flex:0 0 auto;">
