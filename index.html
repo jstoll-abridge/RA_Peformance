@@ -314,25 +314,23 @@
 <body>
 
 <!-- ── PASSWORD GATE ── -->
-<div id="pw-gate" style="position:fixed;inset:0;background:#ffffff;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <div style="width:min(380px,calc(100vw - 40px));text-align:center;padding:clamp(28px,6vw,48px) clamp(20px,5vw,36px);background:#ffffff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,0.08);">
-    <div style="margin-bottom:8px;display:flex;justify-content:center;">
-      <svg width="180" height="54" viewBox="0 0 180 54" xmlns="http://www.w3.org/2000/svg">
-        <rect width="180" height="54" fill="#E8001C" rx="6"/>
-        <text x="90" y="38" font-family="-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif"
-          font-size="30" font-weight="800" fill="white" text-anchor="middle" letter-spacing="3">ABRIDGE</text>
-      </svg>
+<div id="pw-gate" style="position:fixed;inset:0;background:#0d1117;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <div style="width:min(380px,calc(100vw - 40px));text-align:center;padding:clamp(28px,6vw,48px) clamp(20px,5vw,36px);background:#161b22;border:1px solid #21262d;border-radius:16px;box-shadow:0 8px 48px rgba(0,0,0,0.6);">
+    <div style="margin-bottom:6px;display:flex;justify-content:center;">
+      <div style="font-size:36px;font-weight:900;letter-spacing:4px;color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">
+        <span style="color:#E8001C;">a</span>bridge
+      </div>
     </div>
-    <div style="font-size:13px;color:#6b7280;margin-bottom:32px;margin-top:14px;letter-spacing:.01em;">Elevance Health · Performance Model</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#8b949e;margin-bottom:28px;margin-top:10px;">× Elevance Health</div>
     <input id="pw-input" type="password" placeholder="Enter password"
-      style="width:100%;padding:12px 16px;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;color:#111827;font-size:15px;font-family:inherit;outline:none;margin-bottom:10px;text-align:center;letter-spacing:.1em;"
-      onkeydown="if(event.key==='Enter')checkPw()" onfocus="this.style.borderColor='#E8001C'" onblur="this.style.borderColor='#e5e7eb'">
+      style="width:100%;padding:12px 16px;background:#0d1117;border:1.5px solid #30363d;border-radius:8px;color:#e6edf3;font-size:15px;font-family:inherit;outline:none;margin-bottom:10px;text-align:center;letter-spacing:.1em;"
+      onkeydown="if(event.key==='Enter')checkPw()" onfocus="this.style.borderColor='#E8001C'" onblur="this.style.borderColor='#30363d'">
     <div id="pw-error" style="font-size:11px;color:#E8001C;height:16px;margin-bottom:8px;"></div>
     <button onclick="checkPw()"
       style="width:100%;padding:12px;background:#E8001C;border:none;border-radius:8px;color:#ffffff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.03em;">
       Continue →
     </button>
-    <div style="font-size:10px;color:#d1d5db;margin-top:24px;">Confidential · For internal use only</div>
+    <div style="font-size:10px;color:#30363d;margin-top:24px;">Confidential · For internal use only</div>
   </div>
 </div>
 
@@ -373,12 +371,13 @@ function checkPw(){
 
       <!-- PMPY anchor -->
       <div style="padding:16px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;flex:0 0 auto;">
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:4px;">↓ Start here</div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;">PMPY Benchmark</div>
         <div style="display:flex;align-items:center;gap:4px;">
           <span style="font-size:16px;color:var(--muted);">$</span>
           <input type="number" class="rate-num" id="pmpy-input" value="84" min="1" step="1" style="font-size:22px;font-weight:800;width:72px;">
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:5px;">$7 PMPM × 12 months</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:5px;" id="pmpy-sub">= $7.00 PMPM</div>
       </div>
 
       <!-- Assessed -->
@@ -389,12 +388,12 @@ function checkPw(){
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="display:flex;align-items:center;gap:3px;">
-            <input type="number" class="rate-num" id="a-pct" value="50" min="1" max="99" step="1"
+            <input type="number" class="rate-num" id="a-pct" value="30" min="1" max="99" step="1"
               style="border-color:rgba(245,158,11,0.4);color:var(--amber);font-size:20px;font-weight:800;width:56px;">
             <span style="font-size:16px;font-weight:700;color:var(--amber);">%</span>
           </div>
           <span style="color:var(--subtle);">=</span>
-          <span style="font-size:22px;font-weight:800;color:var(--amber);" id="display-aRate">$42</span>
+          <span style="font-size:22px;font-weight:800;color:var(--amber);" id="display-aRate">$25</span>
           <span style="font-size:11px;color:var(--muted);">/ member</span>
         </div>
         <div style="font-size:10px;color:var(--muted);margin-top:6px;">HCC gap surfaced in encounter · coded in note</div>
@@ -411,7 +410,7 @@ function checkPw(){
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <div style="display:flex;align-items:center;gap:3px;">
-            <input type="number" class="rate-num" id="v-pct" value="50" min="1" max="99" step="1"
+            <input type="number" class="rate-num" id="v-pct" value="70" min="1" max="99" step="1"
               style="border-color:rgba(74,222,128,0.4);color:var(--green);font-size:20px;font-weight:800;width:56px;">
             <span style="font-size:16px;font-weight:700;color:var(--green);">%</span>
           </div>
@@ -559,37 +558,57 @@ function checkPw(){
           <div>
             <div class="year-tag">Year 2 · 2027</div>
             <div class="year-lives">1.0M</div>
-            <div class="year-lives-sub">MA lives</div>
+            <div class="year-lives-sub">MA lives · 2.1M total HCCs</div>
           </div>
-          <div style="font-size:10px;font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Independent</div>
+          <div id="y2-scenario-badge" style="font-size:10px;font-weight:700;color:var(--blue);background:var(--blue-dim);border:1px solid rgba(96,165,250,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Scenario driven</div>
         </div>
         <div class="year-body">
-          <div class="slider-row">
-            <div class="slider-top">
-              <span class="slider-label">% of members assessed</span>
-              <span class="slider-val" id="y2-assess-val" style="color:var(--amber);">23%</span>
+
+          <!-- Nat-closed slider → open HCC pool -->
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+              <span style="font-size:11px;color:var(--muted);">% naturally closed by clinicians</span>
+              <span style="font-size:14px;font-weight:800;" id="y2-strip-nat-closed">70%</span>
             </div>
-            <input type="range" class="amber" id="y2-assess" min="5" max="60" value="23" step="1">
-          </div>
-          <div class="slider-row">
-            <div class="slider-top">
-              <span class="slider-label">% validated of assessed</span>
-              <span class="slider-val" id="y2-valid-val" style="color:var(--green);">60%</span>
+            <input type="range" id="y2-nat-closed-slider" min="50" max="90" value="70" step="1"
+              style="width:100%;accent-color:var(--blue);cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">
+              <span style="font-size:11px;color:var(--muted);">Open HCCs addressable by Abridge</span>
+              <span style="font-size:15px;font-weight:800;color:var(--blue);" id="y2-strip-open-hcc">630,000</span>
             </div>
-            <input type="range" class="green" id="y2-valid" min="5" max="95" value="60" step="1">
           </div>
+
+          <!-- Capture sliders -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;">
+            <div class="slider-row" style="margin-bottom:12px;">
+              <div class="slider-top">
+                <span class="slider-label">% open HCCs captured</span>
+                <span class="slider-val" id="y2-assess-val" style="color:var(--amber);">23%</span>
+              </div>
+              <input type="range" class="amber" id="y2-assess" min="5" max="75" value="23" step="1">
+              <div style="font-size:10px;color:var(--muted);margin-top:3px;" id="y2-hcc-line">→ — HCCs captured</div>
+            </div>
+            <div class="slider-row" style="margin-bottom:0;">
+              <div class="slider-top">
+                <span class="slider-label">% validated in claims</span>
+                <span class="slider-val" id="y2-valid-val" style="color:var(--green);">65%</span>
+              </div>
+              <input type="range" class="green" id="y2-valid" min="5" max="95" value="65" step="1">
+            </div>
+          </div>
+
           <div class="tier-out">
             <div class="tier-pill a-pill">
               <div>
-                <div class="pill-left-label" style="color:var(--amber);">Just Assessed</div>
+                <div class="pill-left-label" style="color:var(--amber);">Assessed</div>
                 <div class="pill-left-sub" id="y2-a-mbrs">—</div>
               </div>
               <div class="pill-right-cost" style="color:var(--amber);" id="y2-a-cost">—</div>
             </div>
             <div class="tier-pill v-pill">
               <div>
-                <div class="pill-left-label" style="color:var(--green);">Assessed + Validated</div>
-                <div class="pill-left-sub" id="y2-v-mbrs">—</div>
+                <div class="pill-left-label" style="color:var(--green);">Validated in Claims</div>
+                <div class="pill-left-sub" id="y2-v-mbrs">— <span style="font-size:10px;color:var(--muted);">(subset)</span></div>
               </div>
               <div class="pill-right-cost" style="color:var(--green);" id="y2-v-cost">—</div>
             </div>
@@ -608,37 +627,57 @@ function checkPw(){
           <div>
             <div class="year-tag">Year 3 · 2028</div>
             <div class="year-lives">1.9M</div>
-            <div class="year-lives-sub">MA lives</div>
+            <div class="year-lives-sub">MA lives · 4.0M total HCCs</div>
           </div>
-          <div style="font-size:10px;font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--border);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Independent</div>
+          <div id="y3-scenario-badge" style="font-size:10px;font-weight:700;color:var(--blue);background:var(--blue-dim);border:1px solid rgba(96,165,250,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Scenario driven</div>
         </div>
         <div class="year-body">
-          <div class="slider-row">
-            <div class="slider-top">
-              <span class="slider-label">% of members assessed</span>
-              <span class="slider-val" id="y3-assess-val" style="color:var(--amber);">30%</span>
+
+          <!-- Nat-closed slider → open HCC pool -->
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+              <span style="font-size:11px;color:var(--muted);">% naturally closed by clinicians</span>
+              <span style="font-size:14px;font-weight:800;" id="y3-strip-nat-closed">70%</span>
             </div>
-            <input type="range" class="amber" id="y3-assess" min="5" max="60" value="30" step="1">
-          </div>
-          <div class="slider-row">
-            <div class="slider-top">
-              <span class="slider-label">% validated of assessed</span>
-              <span class="slider-val" id="y3-valid-val" style="color:var(--green);">75%</span>
+            <input type="range" id="y3-nat-closed-slider" min="50" max="90" value="70" step="1"
+              style="width:100%;accent-color:var(--blue);cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">
+              <span style="font-size:11px;color:var(--muted);">Open HCCs addressable by Abridge</span>
+              <span style="font-size:15px;font-weight:800;color:var(--blue);" id="y3-strip-open-hcc">1,197,000</span>
             </div>
-            <input type="range" class="green" id="y3-valid" min="5" max="95" value="75" step="1">
           </div>
+
+          <!-- Capture sliders -->
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;">
+            <div class="slider-row" style="margin-bottom:12px;">
+              <div class="slider-top">
+                <span class="slider-label">% open HCCs captured</span>
+                <span class="slider-val" id="y3-assess-val" style="color:var(--amber);">33%</span>
+              </div>
+              <input type="range" class="amber" id="y3-assess" min="5" max="75" value="33" step="1">
+              <div style="font-size:10px;color:var(--muted);margin-top:3px;" id="y3-hcc-line">→ — HCCs captured</div>
+            </div>
+            <div class="slider-row" style="margin-bottom:0;">
+              <div class="slider-top">
+                <span class="slider-label">% validated in claims</span>
+                <span class="slider-val" id="y3-valid-val" style="color:var(--green);">70%</span>
+              </div>
+              <input type="range" class="green" id="y3-valid" min="5" max="95" value="70" step="1">
+            </div>
+          </div>
+
           <div class="tier-out">
             <div class="tier-pill a-pill">
               <div>
-                <div class="pill-left-label" style="color:var(--amber);">Just Assessed</div>
+                <div class="pill-left-label" style="color:var(--amber);">Assessed</div>
                 <div class="pill-left-sub" id="y3-a-mbrs">—</div>
               </div>
               <div class="pill-right-cost" style="color:var(--amber);" id="y3-a-cost">—</div>
             </div>
             <div class="tier-pill v-pill">
               <div>
-                <div class="pill-left-label" style="color:var(--green);">Assessed + Validated</div>
-                <div class="pill-left-sub" id="y3-v-mbrs">—</div>
+                <div class="pill-left-label" style="color:var(--green);">Validated in Claims</div>
+                <div class="pill-left-sub" id="y3-v-mbrs">— <span style="font-size:10px;color:var(--muted);">(subset)</span></div>
               </div>
               <div class="pill-right-cost" style="color:var(--green);" id="y3-v-cost">—</div>
             </div>
@@ -910,19 +949,29 @@ function getRates() {
 function setScenario(s) {
   current = s;
   // Update tab styles
-  ['cons','base','opt'].forEach((k,i) => {
-    const btn = document.getElementById('tab-' + k);
-    btn.className = 'tab-btn' + (k === s ? ' active-' + k : '');
+  ['cons','base','opt'].forEach(k => {
+    document.getElementById('tab-' + k).className = 'tab-btn' + (k === s ? ' active-' + k : '');
   });
-  // Snap nat-closed slider and Y1 sliders to scenario defaults
+  // Snap all three years to scenario defaults
   const sc = SC[s];
   const natClosedDefaults = { cons: 80, base: 70, opt: 60 };
-  document.getElementById('nat-closed-slider').value = natClosedDefaults[s];
-  const [hccPct, vp] = sc.sliders.y1;
-  document.getElementById('y1-assess').value = hccPct;
-  document.getElementById('y1-valid').value  = vp;
-  // Restore badge since we're back to a scenario
-  document.getElementById('scenario-driven-badge').style.display = '';
+  const nc = natClosedDefaults[s];
+  // Y1
+  document.getElementById('nat-closed-slider').value = nc;
+  document.getElementById('y1-assess').value = sc.sliders.y1[0];
+  document.getElementById('y1-valid').value  = sc.sliders.y1[1];
+  // Y2
+  document.getElementById('y2-nat-closed-slider').value = nc;
+  document.getElementById('y2-assess').value = sc.sliders.y2[0];
+  document.getElementById('y2-valid').value  = sc.sliders.y2[1];
+  // Y3
+  document.getElementById('y3-nat-closed-slider').value = nc;
+  document.getElementById('y3-assess').value = sc.sliders.y3[0];
+  document.getElementById('y3-valid').value  = sc.sliders.y3[1];
+  // Restore all scenario badges
+  ['scenario-driven-badge','y2-scenario-badge','y3-scenario-badge'].forEach(id => {
+    document.getElementById(id).style.display = '';
+  });
   recalc();
 }
 
@@ -933,16 +982,19 @@ function recalc() {
   // ── Pricing header ──
   document.getElementById('display-aRate').textContent = '$' + Math.round(rates.aRate);
   document.getElementById('display-vRate').textContent = '$' + Math.round(rates.vRate);
+  const pmpmVal = (rates.pmpy / 12);
+  document.getElementById('pmpy-sub').textContent = '= $' + (Number.isInteger(pmpmVal) ? pmpmVal : pmpmVal.toFixed(2)) + ' PMPM';
 
-  // ── Year 1: HCC-based math ──
+  // ── Year 1: HCC-based math (read nat-closed slider directly) ──
   let total3 = 0;
-  const y1CapturePct = parseFloat(document.getElementById('y1-assess').value) / 100;
-  const y1ValidPct   = parseFloat(document.getElementById('y1-valid').value)  / 100;
-  const openHccs     = sc.openHccNum;
-  const hccsCaptured = Math.round(openHccs * y1CapturePct);
-  const mbrAssessed  = Math.round(hccsCaptured / 2.1);  // members from HCCs ÷ 2.1 avg
-  const mbrValidated = Math.round(mbrAssessed * y1ValidPct);
-  const mbrAssessOnly = mbrAssessed - mbrValidated;
+  const y1NatClosedPct = parseFloat(document.getElementById('nat-closed-slider').value) / 100;
+  const openHccs       = Math.round(420000 * (1 - y1NatClosedPct));
+  const y1CapturePct   = parseFloat(document.getElementById('y1-assess').value) / 100;
+  const y1ValidPct     = parseFloat(document.getElementById('y1-valid').value)  / 100;
+  const hccsCaptured   = Math.round(openHccs * y1CapturePct);
+  const mbrAssessed    = Math.round(hccsCaptured / 2.1);
+  const mbrValidated   = Math.round(mbrAssessed * y1ValidPct);
+  const mbrAssessOnly  = mbrAssessed - mbrValidated;
 
   document.getElementById('y1-assess-val').textContent    = Math.round(y1CapturePct*100) + '%';
   document.getElementById('y1-valid-val').textContent     = Math.round(y1ValidPct*100) + '%';
@@ -962,41 +1014,41 @@ function recalc() {
   document.getElementById('y1-v-cost').textContent = fmtM(y1vCost);
   document.getElementById('y1-total').textContent  = fmtM(y1total);
 
-  // ── Year 2 & 3: member-based (independent) ──
+  // ── Year 2 & 3: HCC-based (independent, each with own nat-closed slider) ──
   [{ key:'y2', lives:1000000 }, { key:'y3', lives:1900000 }].forEach(({ key, lives }) => {
-    const assessPct    = parseFloat(document.getElementById(key + '-assess').value) / 100;
+    const totalHccsYr  = Math.round(lives * 2.1);
+    const natClosed    = parseFloat(document.getElementById(key + '-nat-closed-slider').value) / 100;
+    const openHccsYr   = Math.round(totalHccsYr * (1 - natClosed));
+    const capturePct   = parseFloat(document.getElementById(key + '-assess').value) / 100;
     const validPct     = parseFloat(document.getElementById(key + '-valid').value)  / 100;
-    document.getElementById(key + '-assess-val').textContent = Math.round(assessPct*100) + '%';
-    document.getElementById(key + '-valid-val').textContent  = Math.round(validPct*100)  + '%';
-    const mbrsAssessed    = lives * assessPct;
-    const mbrsValidated   = mbrsAssessed * validPct;
-    const mbrsAssessOnly  = mbrsAssessed - mbrsValidated;
-    const aCost = mbrsAssessOnly * rates.aRate;
-    const vCost = mbrsValidated  * rates.vRate;
-    const total = aCost + vCost;
+    const hccsCapt     = Math.round(openHccsYr * capturePct);
+    const mbrsAss      = Math.round(hccsCapt / 2.1);
+    const mbrsVal      = Math.round(mbrsAss * validPct);
+    const hccsVal      = Math.round(mbrsVal * 2.1);
+    const aCost        = mbrsAss * rates.aRate;
+    const vCost        = mbrsVal * rates.aRate;
+    const total        = aCost + vCost;
     total3 += total;
-    document.getElementById(key + '-a-mbrs').textContent = fmtN(mbrsAssessOnly) + ' members';
-    document.getElementById(key + '-v-mbrs').textContent = fmtN(mbrsValidated)  + ' members';
-    document.getElementById(key + '-a-cost').textContent = fmtM(aCost);
-    document.getElementById(key + '-v-cost').textContent = fmtM(vCost);
-    document.getElementById(key + '-total').textContent  = fmtM(total);
+
+    document.getElementById(key + '-strip-nat-closed').textContent = Math.round(natClosed*100) + '%';
+    document.getElementById(key + '-strip-open-hcc').textContent   = openHccsYr.toLocaleString();
+    document.getElementById(key + '-assess-val').textContent       = Math.round(capturePct*100) + '%';
+    document.getElementById(key + '-valid-val').textContent        = Math.round(validPct*100) + '%';
+    document.getElementById(key + '-hcc-line').textContent         = '→ ' + fmtN(hccsCapt) + ' HCCs captured';
+    document.getElementById(key + '-a-mbrs').textContent           = fmtN(hccsCapt) + ' HCCs';
+    document.getElementById(key + '-v-mbrs').textContent           = fmtN(hccsVal)  + ' HCCs';
+    document.getElementById(key + '-a-cost').textContent           = fmtM(aCost);
+    document.getElementById(key + '-v-cost').textContent           = fmtM(vCost);
+    document.getElementById(key + '-total').textContent            = fmtM(total);
   });
   document.getElementById('total-3yr').textContent = fmtM(total3);
 
   // ── ROI section ──
-  // Open HCC pool driven by nat-closed slider (not static from scenario)
-  const natClosedPct = parseFloat(document.getElementById('nat-closed-slider').value) / 100;
-  const totalHccs    = 420000;
-  const openHccLive  = Math.round(totalHccs * (1 - natClosedPct));
-  const openHccFmt   = openHccLive.toLocaleString();
-
-  document.getElementById('strip-nat-closed').textContent = Math.round(natClosedPct*100) + '%';
+  const openHccFmt = openHccs.toLocaleString();
+  document.getElementById('strip-nat-closed').textContent = Math.round(y1NatClosedPct*100) + '%';
   document.getElementById('strip-open-hcc').textContent   = openHccFmt;
-  document.getElementById('roi-nat-closed').textContent   = Math.round(natClosedPct*100) + '%';
+  document.getElementById('roi-nat-closed').textContent   = Math.round(y1NatClosedPct*100) + '%';
   document.getElementById('roi-open-hcc').textContent     = openHccFmt;
-
-  // Override scenario's openHccNum with live slider value for Y1 calc
-  sc.openHccNum = openHccLive;
   // Live Y1 ROI math — VALUE_PER_HCC derived from editable RAF assumptions
   const rafBenchmark  = parseFloat(document.getElementById('raf-benchmark').value) || 900;
   const rafCoeff      = parseFloat(document.getElementById('raf-coeff').value)     || 0.2325;
@@ -1123,23 +1175,28 @@ document.getElementById('v-pct').addEventListener('input', function() {
   document.getElementById('a-pct').value = 100 - v;
   recalc();
 });
+
 document.getElementById('pmpy-input').addEventListener('input', recalc);
 
 // RAF assumption inputs
 document.getElementById('raf-benchmark').addEventListener('input', recalc);
 document.getElementById('raf-coeff').addEventListener('input', recalc);
 
-// Slider listeners
-const badge = document.getElementById('scenario-driven-badge');
+// Slider listeners — each year hides only its own badge on manual adjustment
+const badgeIds = { y1: 'scenario-driven-badge', y2: 'y2-scenario-badge', y3: 'y3-scenario-badge' };
 ['nat-closed-slider','y1-assess','y1-valid'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
-    badge.style.display = 'none';
+    document.getElementById(badgeIds.y1).style.display = 'none';
     recalc();
   });
 });
 ['y2','y3'].forEach(key => {
-  document.getElementById(key+'-assess').addEventListener('input', recalc);
-  document.getElementById(key+'-valid').addEventListener('input',  recalc);
+  [key+'-nat-closed-slider', key+'-assess', key+'-valid'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      document.getElementById(badgeIds[key]).style.display = 'none';
+      recalc();
+    });
+  });
 });
 
 // ── INIT ──
