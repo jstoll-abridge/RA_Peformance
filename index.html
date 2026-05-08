@@ -1124,19 +1124,19 @@ function recalc() {
   // Update chart
   updateChart([y1total/1e6, y2Cost/1e6, y3Cost/1e6], [y1Val/1e6, y2Val/1e6, y3Val/1e6], sc);
 
-  // ── Funnel ──
-  const pop  = 200000;
-  const pcp  = Math.round(pop  * sc.pcpPct);
-  const enc  = Math.round(pcp  * 0.70);
-  const addr = Math.round(enc  * sc.addrPct);
-  const cod  = Math.round(addr * 0.60);
+  // ── Funnel — driven by live Y1 values ──
+  const pop      = 200000;
+  const pcp      = Math.round(pop * sc.pcpPct);
+  const enc      = Math.round(pcp * 0.70);
+  const addr     = Math.round(enc * y1CapturePct);   // live Y1 assess% slider
+  const cod      = Math.round(addr * y1ValidPct);    // live Y1 valid% slider
   document.getElementById('f-pcp').textContent       = fmtN(pcp);
   document.getElementById('f-pcp-rate').textContent  = Math.round(sc.pcpPct*100) + '% have a visit';
   document.getElementById('f-enc').textContent       = fmtN(enc);
   document.getElementById('f-addr').textContent      = fmtN(addr);
-  document.getElementById('f-addr-rate').textContent = Math.round(sc.addrPct*100) + '% address rate';
+  document.getElementById('f-addr-rate').textContent = Math.round(y1CapturePct*100) + '% address rate';
   document.getElementById('f-coded').textContent     = fmtN(cod);
-  document.getElementById('f-hcc').textContent       = sc.closed;
+  document.getElementById('f-hcc').textContent       = fmtN(hccsValidated);
 
 }
 
