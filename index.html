@@ -377,18 +377,17 @@ function checkPw(){
     <div class="step-label">
       <div class="step-num" style="background:var(--blue-dim);color:var(--blue);">1</div>
       <div class="step-title" style="color:var(--blue);">Performance Pricing</div>
-      <div class="step-sub">Two-tier · anchored to $7 PMPM × 12 = $84 PMPY</div>
+      <div class="step-sub">Two-tier · set rates directly or adjust PMPY benchmark above</div>
     </div>
 
     <div class="pricing-s1-wrap" style="display:flex;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
 
-      <!-- PMPY anchor -->
+      <!-- PMPY anchor — static, derived from assessed + validated -->
       <div style="padding:16px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;flex:0 0 auto;">
-        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:4px;">↓ Start here</div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;">PMPY Benchmark</div>
         <div style="display:flex;align-items:center;gap:4px;">
-          <span style="font-size:16px;color:var(--muted);">$</span>
-          <input type="number" class="rate-num" id="pmpy-input" value="84" min="1" step="1" style="font-size:22px;font-weight:800;width:72px;">
+          <span style="font-size:18px;font-weight:700;color:#E8001C;">$</span>
+          <span id="pmpy-display" style="font-size:26px;font-weight:900;letter-spacing:-1px;color:#E8001C;">84</span>
         </div>
         <div style="font-size:10px;color:var(--muted);margin-top:5px;" id="pmpy-sub">= $7.00 PMPM</div>
       </div>
@@ -397,19 +396,15 @@ function checkPw(){
       <div style="padding:16px 20px;border-right:1px solid var(--border);flex:1;background:rgba(245,158,11,0.04);">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);">Assessed</span>
-          <span style="font-size:11px;color:var(--muted);">per member assessed</span>
+          <span style="font-size:11px;color:var(--muted);">Per member assessed</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="display:flex;align-items:center;gap:3px;">
-            <input type="number" class="rate-num" id="a-pct" value="30" min="1" max="99" step="1"
-              style="border-color:rgba(245,158,11,0.4);color:var(--amber);font-size:20px;font-weight:800;width:56px;">
-            <span style="font-size:16px;font-weight:700;color:var(--amber);">%</span>
-          </div>
-          <span style="color:var(--subtle);">=</span>
-          <span style="font-size:22px;font-weight:800;color:var(--amber);" id="display-aRate">$25</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:18px;font-weight:700;color:var(--amber);">$</span>
+          <input type="number" class="rate-num" id="a-rate-input" value="25" min="1" max="999" step="1"
+            style="border-color:rgba(245,158,11,0.4);color:var(--amber);font-size:22px;font-weight:800;width:72px;">
           <span style="font-size:11px;color:var(--muted);">/ member</span>
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:6px;">HCC gap surfaced in encounter · coded in note</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:6px;">Potential HCC condition surfaced during encounter documentation</div>
       </div>
 
       <!-- + -->
@@ -419,19 +414,15 @@ function checkPw(){
       <div style="padding:16px 20px;flex:1;background:rgba(74,222,128,0.04);">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);">Validated</span>
-          <span style="font-size:11px;color:var(--muted);">per member validated</span>
+          <span style="font-size:11px;color:var(--muted);">Per member validated</span>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="display:flex;align-items:center;gap:3px;">
-            <input type="number" class="rate-num" id="v-pct" value="70" min="1" max="99" step="1"
-              style="border-color:rgba(74,222,128,0.4);color:var(--green);font-size:20px;font-weight:800;width:56px;">
-            <span style="font-size:16px;font-weight:700;color:var(--green);">%</span>
-          </div>
-          <span style="color:var(--subtle);">=</span>
-          <span style="font-size:22px;font-weight:800;color:var(--green);" id="display-vRate">$42</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:18px;font-weight:700;color:var(--green);">$</span>
+          <input type="number" class="rate-num" id="v-rate-input" value="59" min="1" max="999" step="1"
+            style="border-color:rgba(74,222,128,0.4);color:var(--green);font-size:22px;font-weight:800;width:72px;">
           <span style="font-size:11px;color:var(--muted);">/ member</span>
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:6px;">Condition confirmed in downstream claims · RAF credit</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:6px;">Condition validated through downstream claims audit and RAF submission</div>
       </div>
 
     </div>
@@ -723,7 +714,7 @@ function checkPw(){
 
     <!-- ── Unit Economics — shared, persists to all 3 years ── -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px;">
-      <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;">Unit Economics — Value per Closed HCC · applies to Y1 – Y3</div>
+      <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;">Unit Economics — Estimated Value per Validated HCC · Applies to Y1–Y3</div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:11px;color:var(--muted);">MA benchmark</span>
@@ -733,17 +724,17 @@ function checkPw(){
         </div>
         <div style="color:var(--subtle);font-size:14px;">×</div>
         <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:11px;color:var(--muted);">RAF coeff</span>
+          <span style="font-size:11px;color:var(--muted);">Assumed RAF factor</span>
           <input type="number" id="raf-coeff" class="rate-num" value="0.15" min="0.01" max="1.00" step="0.005" style="width:70px;font-size:14px;">
         </div>
         <div style="color:var(--subtle);font-size:14px;">× 12 =</div>
         <div style="display:flex;align-items:center;gap:14px;margin-left:4px;">
           <div>
-            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Per HCC / mo</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Estimated Value / HCC / Mo</div>
             <div style="font-size:14px;font-weight:700;" id="raf-pmpm">$135</div>
           </div>
           <div>
-            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Annualized / HCC</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Estimated Annualized Value / HCC</div>
             <div style="font-size:20px;font-weight:800;letter-spacing:-0.5px;" id="raf-annual">$1,620</div>
           </div>
         </div>
@@ -772,12 +763,13 @@ function checkPw(){
         </div>
         <div class="roi-yr-body" style="padding:12px;">
           <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y1-roi">—</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-style:italic;margin-bottom:10px;">Based on assumed RAF capture and validation rates</div>
           <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
           <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y1-val">—</div>
           <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
           <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y1-cost">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">HCCs</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
           <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y1-closed">—</div>
         </div>
       </div>
@@ -790,12 +782,13 @@ function checkPw(){
         </div>
         <div class="roi-yr-body" style="padding:12px;">
           <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y2-roi">—</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-style:italic;margin-bottom:10px;">Based on assumed RAF capture and validation rates</div>
           <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
           <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y2-val">—</div>
           <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
           <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y2-cost">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">HCCs</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
           <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y2-closed">—</div>
         </div>
       </div>
@@ -808,12 +801,13 @@ function checkPw(){
         </div>
         <div class="roi-yr-body" style="padding:12px;">
           <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y3-roi">—</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;">ROI</div>
+          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-style:italic;margin-bottom:10px;">Based on assumed RAF capture and validation rates</div>
           <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
           <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y3-val">—</div>
           <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
           <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y3-cost">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">HCCs</div>
+          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
           <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y3-closed">—</div>
         </div>
       </div>
@@ -832,7 +826,7 @@ function checkPw(){
           <div style="font-size:16px;font-weight:700;color:var(--amber);" id="roi-3yr-cost">—</div>
         </div>
         <div>
-          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">HCCs Closed</div>
+          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Validated HCCs</div>
           <div style="font-size:16px;font-weight:700;" id="roi-3yr-closed">—</div>
         </div>
         <div style="border-left:1px solid rgba(74,222,128,0.2);padding-left:24px;">
@@ -900,13 +894,13 @@ function checkPw(){
       <div class="funnel-step">
         <div class="funnel-step-num">Coded in Claims</div>
         <div class="funnel-step-val" style="color:var(--green);" id="f-coded">—</div>
-        <div class="funnel-step-label">60% downstream rate</div>
+        <div class="funnel-step-label">60% downstream validation rate</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
-        <div class="funnel-step-num">HCCs Closed</div>
+        <div class="funnel-step-num">Validated HCCs</div>
         <div class="funnel-step-val" style="color:var(--green);" id="f-hcc">—</div>
-        <div class="funnel-step-label">RAF credit to Elevance</div>
+        <div class="funnel-step-label">Risk-adjustment value captured</div>
       </div>
     </div>
   </div>
@@ -966,10 +960,10 @@ function fmtN(n) {
 }
 
 function getRates() {
-  const pmpy = parseFloat(document.getElementById('pmpy-input').value) || 84;
-  const ap = Math.min(99, Math.max(1, parseFloat(document.getElementById('a-pct').value) || 50));
-  const vp = Math.min(99, Math.max(1, parseFloat(document.getElementById('v-pct').value) || 50));
-  return { pmpy, aRate: pmpy*(ap/100), vRate: pmpy*(vp/100), ap, vp };
+  const aRate = parseFloat(document.getElementById('a-rate-input').value) || 25;
+  const vRate = parseFloat(document.getElementById('v-rate-input').value) || 59;
+  const pmpy  = aRate + vRate;
+  return { pmpy, aRate, vRate };
 }
 
 function setScenario(s) {
@@ -1006,8 +1000,7 @@ function recalc() {
   const sc = SC[current];
 
   // ── Pricing header ──
-  document.getElementById('display-aRate').textContent = '$' + Math.round(rates.aRate);
-  document.getElementById('display-vRate').textContent = '$' + Math.round(rates.vRate);
+  document.getElementById('pmpy-display').textContent = Math.round(rates.pmpy);
   const pmpmVal = (rates.pmpy / 12);
   document.getElementById('pmpy-sub').textContent = '= $' + (Number.isInteger(pmpmVal) ? pmpmVal : pmpmVal.toFixed(2)) + ' PMPM';
 
@@ -1198,19 +1191,9 @@ function updateChart(costsM, valuesM, sc) {
   });
 }
 
-// ── LINKED % INPUTS ──
-document.getElementById('a-pct').addEventListener('input', function() {
-  const v = Math.min(99, Math.max(1, parseInt(this.value)||50));
-  document.getElementById('v-pct').value = 100 - v;
-  recalc();
-});
-document.getElementById('v-pct').addEventListener('input', function() {
-  const v = Math.min(99, Math.max(1, parseInt(this.value)||50));
-  document.getElementById('a-pct').value = 100 - v;
-  recalc();
-});
-
-document.getElementById('pmpy-input').addEventListener('input', recalc);
+// ── RATE INPUTS ──
+document.getElementById('a-rate-input').addEventListener('input', recalc);
+document.getElementById('v-rate-input').addEventListener('input', recalc);
 
 // RAF assumption inputs
 document.getElementById('raf-benchmark').addEventListener('input', recalc);
