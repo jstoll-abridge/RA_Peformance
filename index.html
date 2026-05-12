@@ -7,18 +7,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
 <style>
   :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --border: #21262d;
-    --green: #4ade80;
-    --green-dim: rgba(74,222,128,0.1);
-    --amber: #f59e0b;
-    --amber-dim: rgba(245,158,11,0.1);
-    --blue: #60a5fa;
-    --blue-dim: rgba(96,165,250,0.1);
-    --text: #e6edf3;
-    --muted: #8b949e;
-    --subtle: #30363d;
+    --bg: #0d1117; --surface: #161b22; --border: #21262d;
+    --green: #4ade80; --green-dim: rgba(74,222,128,0.1);
+    --amber: #f59e0b; --amber-dim: rgba(245,158,11,0.1);
+    --blue: #60a5fa; --blue-dim: rgba(96,165,250,0.1);
+    --red: #E8001C; --text: #e6edf3; --muted: #8b949e; --subtle: #30363d;
     color-scheme: dark;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,299 +21,141 @@
     min-height: 100vh; padding: 40px 24px 80px;
     font-size: 14px; line-height: 1.6;
   }
-  .page { max-width: 880px; margin: 0 auto; }
+  .page { max-width: 900px; margin: 0 auto; }
 
   /* ── HEADER ── */
   .header {
     display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 36px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+    margin-bottom: 32px; padding-bottom: 18px; border-bottom: 1px solid var(--border);
   }
   .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.4px; }
-  .logo em { color: #E8001C; font-style: normal; }
+  .logo em { color: var(--red); font-style: normal; }
   .tagline { font-size: 13px; color: var(--muted); margin-top: 3px; }
   .header-right { text-align: right; font-size: 12px; color: var(--muted); }
   .header-right strong { color: var(--text); display: block; font-size: 13px; }
 
-  /* ── STEP LABELS ── */
-  .step-label {
-    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
-  }
+  /* ── SECTION ── */
+  .section { margin-bottom: 32px; }
+  .step-label { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .step-num {
     width: 22px; height: 22px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 800; flex-shrink: 0;
   }
   .step-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-  .step-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
-  .section { margin-bottom: 40px; }
+  .step-sub { font-size: 11px; color: var(--muted); margin-left: auto; }
 
-  /* ── PRICING FLOW ── */
-  .pricing-flow {
-    display: flex; align-items: stretch; gap: 0;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; overflow: hidden;
-  }
-  .pricing-tier { flex: 1; padding: 22px 20px; }
-  .pricing-tier + .pricing-tier { border-left: 1px solid var(--border); }
-  .pricing-tier.assessed { background: rgba(245,158,11,0.05); }
-  .pricing-tier.validated { background: rgba(74,222,128,0.05); }
-  .pricing-tier.equals {
-    flex: 0 0 150px; background: rgba(255,255,255,0.02);
-    display: flex; flex-direction: column; justify-content: center;
-    align-items: center; text-align: center; padding: 20px;
-  }
-  .tier-badge {
-    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .06em;
-    text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
-  }
-  .badge-a { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
-  .badge-v { background: var(--green-dim); color: var(--green); border: 1px solid rgba(74,222,128,0.25); }
-  .tier-amount { font-size: 36px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; margin-bottom: 5px; }
-  .tier-unit { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
-  .tier-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .equals-op { font-size: 28px; color: var(--muted); font-weight: 300; margin-bottom: 8px; }
-  .equals-amount { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
-  .equals-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-  /* Rate adjust bar */
-  .rate-bar {
-    margin-top: 10px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    padding: 10px 16px; background: var(--surface);
-    border: 1px solid var(--border); border-radius: 8px;
-  }
-  .rate-bar label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  /* ── INPUTS ── */
   .rate-num {
     background: var(--bg); border: 1px solid var(--border); border-radius: 5px;
     color: var(--text); font-size: 15px; font-weight: 700;
-    padding: 4px 8px; outline: none; width: 72px;
-    font-family: inherit;
+    padding: 4px 6px; text-align: center; width: 72px; font-family: inherit;
   }
-  .rate-num:focus { border-color: var(--green); }
+  .rate-num:focus { border-color: var(--green); outline: none; }
   .rate-num::-webkit-inner-spin-button { opacity: .4; }
-  .rate-sep { color: var(--subtle); }
 
   /* ── SCENARIO TABS ── */
-  .scenario-tabs {
-    display: flex; gap: 0; margin-bottom: 24px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; overflow: hidden;
-  }
+  .scenario-tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
   .tab-btn {
-    flex: 1; padding: 14px 16px; background: none; border: none; border-right: 1px solid var(--border);
-    color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer;
-    transition: all .15s; font-family: inherit; text-align: left;
-    vertical-align: top;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); cursor: pointer; padding: 14px 16px; text-align: left;
+    transition: border-color .15s;
   }
-  .tab-btn:last-child { border-right: none; }
-  .tab-name { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px; }
-  .tab-roi  { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
-  .tab-sub  { display: block; font-size: 10px; opacity: .7; margin-top: 2px; }
-  .tab-btn.active-cons { background: rgba(245,158,11,0.08); color: var(--amber); border-bottom: 2px solid var(--amber); }
-  .tab-btn.active-base { background: rgba(96,165,250,0.08); color: var(--blue);  border-bottom: 2px solid var(--blue);  }
-  .tab-btn.active-opt  { background: rgba(74,222,128,0.08); color: var(--green); border-bottom: 2px solid var(--green); }
+  .tab-btn:hover { border-color: var(--muted); }
+  .tab-name { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 4px; }
+  .tab-roi  { display: block; font-size: 26px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+  .tab-sub  { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .active-cons { border-color: rgba(245,158,11,0.5); background: rgba(245,158,11,0.06); }
+  .active-base { border-color: rgba(96,165,250,0.5);  background: rgba(96,165,250,0.06); }
+  .active-opt  { border-color: rgba(74,222,128,0.5);  background: rgba(74,222,128,0.06); }
+  .active-cons .tab-roi { color: var(--amber); }
+  .active-base .tab-roi { color: var(--blue); }
+  .active-opt  .tab-roi { color: var(--green); }
 
-  /* ── YEAR CARDS (3-col) ── */
-  .year-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 10px; }
-  .year-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; overflow: hidden;
+  /* ── ROI YEAR BOXES ── */
+  .roi-year-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 12px; }
+  .roi-year-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .roi-year-box-head { padding: 9px 12px; border-bottom: 1px solid var(--border); background: rgba(96,165,250,0.05); }
+  .roi-year-box-body { padding: 12px; }
+
+  /* ── SCENARIO BADGE ── */
+  .scenario-badge {
+    display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .06em; padding: 2px 7px; border-radius: 20px;
+    background: rgba(96,165,250,0.12); color: var(--blue); border: 1px solid rgba(96,165,250,0.2);
+    white-space: nowrap;
   }
-  .year-head {
+
+  /* ── COMPACT YEAR CARDS ── */
+  .year-compact-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .year-compact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .year-compact-header {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
     display: flex; justify-content: space-between; align-items: flex-start;
-    padding: 14px 16px; border-bottom: 1px solid var(--border);
   }
-  .year-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 2px; }
-  .year-lives { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
-  .year-lives-sub { font-size: 11px; color: var(--muted); }
+  .year-compact-lives { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; line-height: 1; margin-top: 2px; }
+  .year-compact-sub   { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .year-compact-body  { padding: 12px 14px; }
 
-  .year-body { padding: 14px 16px; }
+  .cslider-row { margin-bottom: 12px; }
+  .cslider-row:last-child { margin-bottom: 0; }
+  .cslider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .cslider-label { font-size: 10px; color: var(--muted); }
+  .cslider-val   { font-size: 13px; font-weight: 800; }
+  .cslider-sub   { font-size: 10px; color: var(--muted); margin-top: 3px; }
+  input[type=range] { width: 100%; cursor: pointer; }
 
-  /* Sliders */
-  .slider-row { margin-bottom: 14px; }
-  .slider-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
-  .slider-label { font-size: 11px; color: var(--muted); }
-  .slider-val { font-size: 15px; font-weight: 800; }
-  input[type="range"] { width: 100%; cursor: pointer; margin: 0; }
-  input[type="range"].amber { accent-color: var(--amber); }
-  input[type="range"].green { accent-color: var(--green); }
-
-  /* Tier output rows */
-  .tier-out {
-    margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .tier-pill {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 9px 12px; border-radius: 7px;
-  }
-  .tier-pill.a-pill { background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.18); }
-  .tier-pill.v-pill { background: var(--green-dim);  border: 1px solid rgba(74,222,128,0.18); }
-  .pill-left-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
-  .pill-left-sub   { font-size: 11px; color: var(--muted); margin-top: 1px; }
-  .pill-right-cost { font-size: 16px; font-weight: 800; }
-
-  .year-total-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
-  }
-  .year-total-label { font-size: 11px; color: var(--muted); }
-  .year-total-val   { font-size: 18px; font-weight: 800; color: var(--green); }
-
-  /* 3-yr total strip */
-  .three-yr-strip {
-    text-align: right; margin-bottom: 0;
-    font-size: 13px; color: var(--muted);
-  }
-  .three-yr-strip strong { color: var(--text); font-size: 16px; font-weight: 800; }
-
-  /* ── ROI SECTION ── */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .stat-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 18px 20px;
-  }
-  .stat-card-title {
-    font-size: 11px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: .08em; color: var(--muted); margin-bottom: 14px;
-  }
-  .stat-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 8px 0; border-bottom: 1px solid var(--border);
-  }
-  .stat-row:last-of-type { border-bottom: none; }
-  .stat-row-label { font-size: 12px; color: var(--muted); }
-  .stat-row-val   { font-size: 14px; font-weight: 700; }
-  .roi-box {
-    margin-top: 14px; padding: 14px 16px; border-radius: 8px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .roi-box-label { font-size: 11px; color: var(--muted); }
-  .roi-box-sub   { font-size: 12px; color: var(--muted); margin-top: 3px; }
-  .roi-box-val   { font-size: 30px; font-weight: 800; letter-spacing: -1px; text-align: right; }
-  .roi-box-mult  { font-size: 16px; font-weight: 700; margin-top: 3px; text-align: right; }
-
-  .chart-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 18px 20px 14px;
-  }
-  .chart-card-title {
-    font-size: 11px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: .08em; color: var(--muted); margin-bottom: 14px;
-  }
-  .chart-wrap { position: relative; height: 190px; }
-  .chart-footnote { font-size: 11px; color: var(--muted); margin-top: 10px; }
+  .year-cost-strip { border-top: 1px solid var(--border); padding: 10px 14px; display: flex; flex-direction: column; gap: 5px; }
+  .year-cost-row   { display: flex; justify-content: space-between; align-items: center; }
+  .year-cost-lbl   { font-size: 10px; }
+  .year-cost-val   { font-size: 12px; font-weight: 700; }
+  .year-cost-total { display: flex; justify-content: space-between; align-items: center; padding-top: 7px; margin-top: 2px; border-top: 1px solid var(--border); }
+  .year-cost-total-lbl { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .year-cost-total-val { font-size: 15px; font-weight: 800; }
 
   /* ── FUNNEL ── */
-  .funnel-row {
-    display: flex; align-items: center;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; overflow: hidden;
-  }
+  .funnel-row { display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
   .funnel-step { flex: 1; padding: 14px 10px; text-align: center; border-right: 1px solid var(--border); }
   .funnel-step:last-child { border-right: none; background: rgba(74,222,128,0.04); }
   .funnel-step-num   { font-size: 9px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; }
   .funnel-step-val   { font-size: 17px; font-weight: 800; line-height: 1; margin-bottom: 3px; }
   .funnel-step-label { font-size: 10px; color: var(--muted); line-height: 1.4; }
-  .funnel-arrow { flex: 0 0 16px; text-align: center; color: var(--subtle); font-size: 14px; }
+  .funnel-arrow      { flex: 0 0 16px; text-align: center; color: var(--subtle); font-size: 14px; }
 
   /* ── FOOTER ── */
-  .footer-note {
-    font-size: 11px; color: var(--muted); margin-top: 32px;
-    padding-top: 16px; border-top: 1px solid var(--border); line-height: 1.7;
-  }
-  .footer-note strong { color: var(--text); }
-
-  /* ── TABLET ── */
-  @media (max-width: 860px) {
-    .year-grid { grid-template-columns: 1fr; }
-    .two-col   { grid-template-columns: 1fr; }
-  }
+  .footer-note { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); line-height: 1.7; }
 
   /* ── MOBILE ── */
   @media (max-width: 640px) {
-    /* Step 1 pricing block */
-    .pricing-s1-wrap { flex-direction: column !important; }
-    .pricing-s1-wrap > div { border-right: none !important; border-top: 1px solid var(--border); }
-    .pricing-s1-wrap > div:first-child { border-top: none; }
-    .pricing-s1-wrap > div[style*="flex-shrink:0"] { display: none; } /* hide + separator */
-
-    body { padding: 20px 14px 60px; font-size: 13px; }
-    .page { max-width: 100%; }
-
-    /* Header */
-    .header { flex-direction: column; gap: 6px; margin-bottom: 24px; padding-bottom: 14px; }
+    body { padding: 16px 12px 60px; font-size: 13px; }
+    .header { flex-direction: column; gap: 6px; margin-bottom: 20px; }
     .header-right { text-align: left; }
-    .logo { font-size: 16px; }
-
-    /* Step labels */
-    .step-label { flex-wrap: wrap; gap: 8px; }
-    .step-sub { margin-left: 0; width: 100%; font-size: 11px; }
-    .step-title { font-size: 12px; }
-    .section { margin-bottom: 28px; }
-
-    /* Scenario tabs — stack details on narrow screens */
+    .step-sub { display: none; }
+    .pricing-wrap { flex-direction: column !important; }
+    .pricing-wrap > div { border-right: none !important; border-top: 1px solid var(--border); }
+    .pricing-wrap > div:first-child { border-top: none; }
+    .pricing-sep { display: none; }
+    .scenario-tabs { gap: 6px; }
     .tab-btn { padding: 10px 8px; }
-    .tab-name { font-size: 9px; }
-    .tab-roi  { font-size: 17px; }
-    .tab-sub  { font-size: 9px; }
-
-    /* Year grid */
-    .year-grid { grid-template-columns: 1fr; gap: 12px; }
-    .year-lives { font-size: 18px; }
-
-    /* Two-col */
-    .two-col { grid-template-columns: 1fr; }
-
-    /* Tier pills */
-    .pill-right-cost { font-size: 14px; }
-
-    /* Rate bar */
-    .rate-bar { gap: 8px; flex-wrap: wrap; }
-    .rate-num { width: 60px; font-size: 13px; }
-
-    /* Pricing flow Step 1 — force column */
-    .pricing-flow { flex-direction: column; }
-    .pricing-tier.equals { flex: none; border-left: none; border-top: 1px solid var(--border); flex-direction: row; justify-content: center; gap: 16px; }
-    .pricing-tier + .pricing-tier { border-left: none; border-top: 1px solid var(--border); }
-    .tier-amount { font-size: 28px; }
-
-    /* ROI box */
-    .roi-box { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .roi-box-val { font-size: 24px; }
-
-    /* Chart */
-    .chart-wrap { height: 150px; }
-
-    /* Funnel — allow horizontal scroll */
+    .tab-roi { font-size: 20px; }
+    .tab-name, .tab-sub { font-size: 9px; }
+    .roi-year-grid { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
+    .roi-year-box-head { padding: 6px 8px !important; }
+    .roi-year-box-body { padding: 8px !important; }
+    .roi-main { font-size: 22px !important; }
+    .roi-val  { font-size: 12px !important; }
+    .roi-lbl  { font-size: 9px !important; }
+    .year-compact-grid { grid-template-columns: 1fr; }
+    .three-yr-strip { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
     .funnel-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .funnel-step { min-width: 68px; padding: 10px 6px; }
+    .funnel-step { min-width: 72px; padding: 10px 6px; }
     .funnel-step-val { font-size: 13px; }
     .funnel-step-label { font-size: 9px; }
     .funnel-arrow { flex: 0 0 12px; font-size: 11px; }
-
-    /* Three-yr strip */
-    .three-yr-strip { font-size: 12px; }
-
-    /* Section 4 — ROI grid stays 3-col on mobile, just tighter */
-    #roi-year-grid { grid-template-columns: repeat(3,1fr) !important; gap: 6px !important; }
-    #roi-year-grid .roi-yr-header { padding: 7px 8px !important; }
-    #roi-year-grid .roi-yr-body { padding: 8px !important; }
-    #roi-year-grid .roi-yr-main { font-size: 22px !important; }
-    #roi-year-grid .roi-yr-val  { font-size: 12px !important; }
-    #roi-year-grid .roi-yr-sub  { font-size: 10px !important; }
-    #roi-year-grid .roi-yr-lbl  { font-size: 9px !important; }
-
-    /* Unit economics strip — wrap on mobile */
-    #unit-econ-strip { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
-    #unit-econ-strip .ue-sep { display: none; }
   }
-
-  /* ── SMALL PHONE (≤390px) ── */
   @media (max-width: 390px) {
-    body { padding: 16px 12px 50px; }
-    .tab-roi { font-size: 14px; }
+    .tab-roi { font-size: 16px; }
     .tab-btn { padding: 8px 6px; }
-    .year-lives { font-size: 16px; }
   }
 </style>
 </head>
@@ -329,35 +164,24 @@
 <!-- ── PASSWORD GATE ── -->
 <div id="pw-gate" style="position:fixed;inset:0;background:#0d1117;z-index:9999;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <div style="width:min(380px,calc(100vw - 40px));text-align:center;padding:clamp(28px,6vw,48px) clamp(20px,5vw,36px);background:#161b22;border:1px solid #21262d;border-radius:16px;box-shadow:0 8px 48px rgba(0,0,0,0.6);">
-    <div style="margin-bottom:6px;display:flex;justify-content:center;">
-      <div style="font-size:36px;font-weight:900;letter-spacing:4px;color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;">
-        <span style="color:#E8001C;">a</span>bridge
-      </div>
-    </div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#8b949e;margin-bottom:28px;margin-top:10px;">× Elevance Health</div>
-    <input id="pw-input" type="password" placeholder="Enter password"
-      style="width:100%;padding:12px 16px;background:#0d1117;border:1.5px solid #30363d;border-radius:8px;color:#e6edf3;font-size:15px;font-family:inherit;outline:none;margin-bottom:10px;text-align:center;letter-spacing:.1em;"
-      onkeydown="if(event.key==='Enter')checkPw()" onfocus="this.style.borderColor='#E8001C'" onblur="this.style.borderColor='#30363d'">
-    <div id="pw-error" style="font-size:11px;color:#E8001C;height:16px;margin-bottom:8px;"></div>
-    <button onclick="checkPw()"
-      style="width:100%;padding:12px;background:#E8001C;border:none;border-radius:8px;color:#ffffff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.03em;">
-      Continue →
-    </button>
-    <div style="font-size:10px;color:#30363d;margin-top:24px;">Confidential · For internal use only</div>
+    <div style="font-size:36px;font-weight:900;letter-spacing:4px;color:#ffffff;margin-bottom:8px;"><span style="color:#E8001C;">a</span>bridge</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#8b949e;margin-bottom:28px;">× ELEVANCE HEALTH</div>
+    <input id="pw-input" type="password" placeholder="Enter access code"
+      style="width:100%;padding:12px 16px;border-radius:8px;background:#0d1117;border:1.5px solid #30363d;color:#e6edf3;font-size:15px;font-family:inherit;text-align:center;outline:none;margin-bottom:12px;"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <div id="pw-error" style="font-size:12px;color:#f87171;height:16px;margin-bottom:10px;"></div>
+    <button onclick="checkPw()" style="width:100%;padding:12px;border-radius:8px;background:#E8001C;border:none;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;">Continue →</button>
   </div>
 </div>
-
 <script>
 function checkPw(){
   const val=document.getElementById('pw-input').value.trim();
   if(val==='abridge2026'){
     document.getElementById('pw-gate').style.display='none';
   } else {
-    const err=document.getElementById('pw-error');
-    err.textContent='Incorrect password. Try again.';
-    document.getElementById('pw-input').value='';
-    document.getElementById('pw-input').focus();
-    setTimeout(()=>err.textContent='',3000);
+    document.getElementById('pw-error').textContent='Incorrect code — try again';
+    document.getElementById('pw-input').style.borderColor='#f87171';
+    setTimeout(()=>{document.getElementById('pw-input').style.borderColor='#30363d';},2000);
   }
 }
 </script>
@@ -370,334 +194,286 @@ function checkPw(){
       <div class="logo"><em>abridge</em> × Elevance Health</div>
       <div class="tagline">Performance Pricing Model · Medicare Advantage Risk Adjustment</div>
     </div>
+    <div class="header-right">
+      <strong>200K → 1.0M → 1.9M</strong>MA lives over 3 years
+    </div>
   </div>
 
-  <!-- ══ STEP 1: PRICING (compact) ══ -->
+  <!-- ══ STEP 1: PRICING ══ -->
   <div class="section">
     <div class="step-label">
       <div class="step-num" style="background:var(--blue-dim);color:var(--blue);">1</div>
       <div class="step-title" style="color:var(--blue);">Performance Pricing</div>
-      <div class="step-sub">Two-tier · set rates directly or adjust PMPY benchmark above</div>
+      <div class="step-sub">Two-tier · set rates directly</div>
     </div>
+    <div class="pricing-wrap" style="display:flex;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
 
-    <div class="pricing-s1-wrap" style="display:flex;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-
-      <!-- PMPY anchor — static, derived from assessed + validated -->
-      <div style="padding:16px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;flex:0 0 auto;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;">PMPY Benchmark</div>
-        <div style="display:flex;align-items:center;gap:4px;">
-          <span style="font-size:18px;font-weight:700;color:#E8001C;">$</span>
-          <span id="pmpy-display" style="font-size:26px;font-weight:900;letter-spacing:-1px;color:#E8001C;">84</span>
+      <!-- PMPY derived total -->
+      <div style="padding:14px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;flex:0 0 auto;min-width:130px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px;">PMPY Benchmark</div>
+        <div style="display:flex;align-items:baseline;gap:3px;">
+          <span style="font-size:16px;font-weight:700;color:var(--red);">$</span>
+          <span id="pmpy-display" style="font-size:28px;font-weight:900;letter-spacing:-1px;color:var(--red);">84</span>
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:5px;" id="pmpy-sub">= $7.00 PMPM</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px;" id="pmpy-sub">= $7.00 PMPM</div>
       </div>
 
       <!-- Assessed -->
-      <div style="padding:16px 20px;border-right:1px solid var(--border);flex:1;background:rgba(245,158,11,0.04);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div style="padding:14px 20px;border-right:1px solid var(--border);flex:1;background:rgba(245,158,11,0.04);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--amber);">Assessed</span>
-          <span style="font-size:11px;color:var(--muted);">Per member assessed</span>
+          <span style="font-size:10px;color:var(--muted);">Per member assessed</span>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:18px;font-weight:700;color:var(--amber);">$</span>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span style="font-size:16px;font-weight:700;color:var(--amber);">$</span>
           <input type="number" class="rate-num" id="a-rate-input" value="25" min="1" max="999" step="1"
-            style="border-color:rgba(245,158,11,0.4);color:var(--amber);font-size:22px;font-weight:800;width:72px;">
+            style="border-color:rgba(245,158,11,0.4);color:var(--amber);font-size:20px;font-weight:800;">
           <span style="font-size:11px;color:var(--muted);">/ member</span>
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:6px;">Potential HCC condition surfaced during encounter documentation</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:5px;">Potential HCC condition surfaced during encounter documentation</div>
       </div>
 
-      <!-- + -->
-      <div style="display:flex;align-items:center;padding:0 10px;color:var(--subtle);font-size:20px;font-weight:300;flex-shrink:0;">+</div>
+      <!-- + separator -->
+      <div class="pricing-sep" style="display:flex;align-items:center;padding:0 10px;color:var(--subtle);font-size:20px;font-weight:300;flex-shrink:0;">+</div>
 
       <!-- Validated -->
-      <div style="padding:16px 20px;flex:1;background:rgba(74,222,128,0.04);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div style="padding:14px 20px;flex:1;background:rgba(74,222,128,0.04);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);">Validated</span>
-          <span style="font-size:11px;color:var(--muted);">Per member validated</span>
+          <span style="font-size:10px;color:var(--muted);">Per member validated</span>
         </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:18px;font-weight:700;color:var(--green);">$</span>
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span style="font-size:16px;font-weight:700;color:var(--green);">$</span>
           <input type="number" class="rate-num" id="v-rate-input" value="59" min="1" max="999" step="1"
-            style="border-color:rgba(74,222,128,0.4);color:var(--green);font-size:22px;font-weight:800;width:72px;">
+            style="border-color:rgba(74,222,128,0.4);color:var(--green);font-size:20px;font-weight:800;">
           <span style="font-size:11px;color:var(--muted);">/ member</span>
         </div>
-        <div style="font-size:10px;color:var(--muted);margin-top:6px;">Condition validated through downstream claims audit and RAF submission</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:5px;">Condition validated through downstream claims audit and RAF submission</div>
       </div>
-
     </div>
   </div>
 
-  <!-- ══ STEP 2: SCENARIO SELECTOR ══ -->
+  <!-- ══ STEP 2: SCENARIO PICKER ══ -->
   <div class="section">
     <div class="step-label">
       <div class="step-num" style="background:var(--blue-dim);color:var(--blue);">2</div>
       <div class="step-title" style="color:var(--blue);">Pick a Scenario</div>
-      <div class="step-sub"></div>
+      <div class="step-sub">Sets assumption sliders across all 3 years</div>
     </div>
-
     <div class="scenario-tabs">
       <button class="tab-btn active-cons" id="tab-cons" onclick="setScenario('cons')">
         <span class="tab-name">Conservative</span>
         <span class="tab-roi" id="tab-cons-roi">—</span>
         <span class="tab-sub">ROI · Y1 · 200K lives</span>
-        <div style="margin-top:10px;text-align:left;display:flex;flex-direction:column;gap:4px;">
-          <span style="font-size:10px;opacity:.75;">80% HCCs naturally closed</span>
-          <span style="font-size:10px;opacity:.75;">20% open HCC pool</span>
-          <span style="font-size:10px;opacity:.75;">27% assessed · 60% validated</span>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;">
+          <span style="font-size:10px;opacity:.7;">80% nat-closed · 20% open pool</span>
+          <span style="font-size:10px;opacity:.7;">27% assessed · 60% validated</span>
         </div>
       </button>
       <button class="tab-btn" id="tab-base" onclick="setScenario('base')">
         <span class="tab-name">Base</span>
         <span class="tab-roi" id="tab-base-roi">—</span>
         <span class="tab-sub">ROI · Y1 · 200K lives</span>
-        <div style="margin-top:10px;text-align:left;display:flex;flex-direction:column;gap:4px;">
-          <span style="font-size:10px;opacity:.75;">70% HCCs naturally closed</span>
-          <span style="font-size:10px;opacity:.75;">30% open HCC pool</span>
-          <span style="font-size:10px;opacity:.75;">35% assessed · 60% validated</span>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;">
+          <span style="font-size:10px;opacity:.7;">70% nat-closed · 30% open pool</span>
+          <span style="font-size:10px;opacity:.7;">35% assessed · 60% validated</span>
         </div>
       </button>
       <button class="tab-btn" id="tab-opt" onclick="setScenario('opt')">
         <span class="tab-name">Optimistic</span>
         <span class="tab-roi" id="tab-opt-roi">—</span>
         <span class="tab-sub">ROI · Y1 · 200K lives</span>
-        <div style="margin-top:10px;text-align:left;display:flex;flex-direction:column;gap:4px;">
-          <span style="font-size:10px;opacity:.75;">60% HCCs naturally closed</span>
-          <span style="font-size:10px;opacity:.75;">40% open HCC pool</span>
-          <span style="font-size:10px;opacity:.75;">44% assessed · 70% validated</span>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:3px;">
+          <span style="font-size:10px;opacity:.7;">60% nat-closed · 40% open pool</span>
+          <span style="font-size:10px;opacity:.7;">44% assessed · 70% validated</span>
         </div>
       </button>
     </div>
+  </div>
 
-
-    <!-- ══ STEP 3: WHAT ELEVANCE PAYS ══ -->
+  <!-- ══ STEP 3: MODEL ASSUMPTIONS ══ -->
+  <div class="section">
     <div class="step-label">
       <div class="step-num" style="background:var(--amber-dim);color:var(--amber);">3</div>
-      <div class="step-title" style="color:var(--amber);">What Elevance Pays Abridge</div>
-      <div class="step-sub">Sliders let you stress-test each year independently</div>
+      <div class="step-title" style="color:var(--amber);">Model Assumptions</div>
+      <div class="step-sub">Adjust sliders per year · all outputs below update live</div>
     </div>
 
-    <div class="year-grid">
+    <div class="year-compact-grid">
 
-      <!-- Y1 -->
-      <div class="year-card" style="border-color:rgba(96,165,250,0.3);">
-        <div class="year-head" style="background:rgba(96,165,250,0.04);">
+      <!-- ── Y1 ── -->
+      <div class="year-compact-card">
+        <div class="year-compact-header">
           <div>
-            <div class="year-tag">Year 1 · 2026</div>
-            <div class="year-lives">200K</div>
-            <div class="year-lives-sub">MA lives · 420K total HCCs</div>
-            <div class="year-lives-sub" style="margin-top:2px;font-size:10px;color:var(--muted);opacity:.7;">(2.1 Avg HCCs Per MA Member)</div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Year 1 · 2026</div>
+            <div class="year-compact-lives">200K</div>
+            <div class="year-compact-sub">MA lives · 420K total HCCs</div>
+            <div class="year-compact-sub" style="opacity:.55;">(2.1 Avg HCCs Per MA Member)</div>
           </div>
-          <div id="scenario-driven-badge" style="font-size:10px;font-weight:700;color:var(--blue);background:var(--blue-dim);border:1px solid rgba(96,165,250,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Scenario driven</div>
         </div>
-        <div class="year-body">
-
-          <!-- Nat-closed slider → open HCC pool -->
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
-              <span style="font-size:11px;color:var(--muted);">% naturally closed by clinicians</span>
-              <span style="font-size:14px;font-weight:800;" id="strip-nat-closed">80%</span>
+        <div class="year-compact-body">
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% naturally closed by clinicians</span>
+              <span class="cslider-val" style="color:var(--blue);" id="strip-nat-closed">80%</span>
             </div>
-            <input type="range" id="nat-closed-slider" min="50" max="90" value="80" step="1"
-              style="width:100%;accent-color:var(--blue);cursor:pointer;">
-            <div style="display:flex;justify-content:space-between;margin-top:3px;">
-              <span style="font-size:9px;color:var(--green);">60% Opt.</span>
-              <span style="font-size:9px;color:var(--blue);">70% Base</span>
-              <span style="font-size:9px;color:var(--amber);">80% Cons.</span>
+            <input type="range" id="nat-closed-slider" min="50" max="90" value="80" step="1" style="accent-color:var(--blue);">
+            <div style="display:flex;justify-content:space-between;font-size:9px;margin-top:2px;">
+              <span style="color:var(--green);">60% Opt.</span>
+              <span style="color:var(--blue);">70% Base</span>
+              <span style="color:var(--amber);">80% Cons.</span>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">
-              <span style="font-size:11px;color:var(--muted);">Open HCCs addressable by Abridge</span>
-              <span style="font-size:15px;font-weight:800;color:var(--blue);" id="strip-open-hcc">84,000</span>
-            </div>
+            <div class="cslider-sub">Open HCC pool: <strong style="color:var(--text);" id="strip-open-hcc">84,000</strong></div>
           </div>
-
-          <!-- Capture sliders -->
-          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;">
-            <div class="slider-row" style="margin-bottom:12px;">
-              <div class="slider-top">
-                <span class="slider-label">% open HCCs captured</span>
-                <span class="slider-val" id="y1-assess-val" style="color:var(--amber);">27%</span>
-              </div>
-              <input type="range" class="amber" id="y1-assess" min="5" max="75" value="27" step="1">
-              <div style="font-size:10px;color:var(--muted);margin-top:3px;" id="y1-hcc-line">→ 22,700 HCCs · 10,800 members</div>
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% of open HCCs assessed</span>
+              <span class="cslider-val" style="color:var(--amber);" id="y1-assess-val">27%</span>
             </div>
-            <div class="slider-row" style="margin-bottom:0;">
-              <div class="slider-top">
-                <span class="slider-label">% validated in claims</span>
-                <span class="slider-val" id="y1-valid-val" style="color:var(--green);">60%</span>
-              </div>
-              <input type="range" class="green" id="y1-valid" min="5" max="95" value="60" step="1">
-            </div>
+            <input type="range" id="y1-assess" min="5" max="80" value="27" step="1" style="accent-color:var(--amber);">
+            <div class="cslider-sub" id="y1-hcc-line">→ — HCCs captured</div>
           </div>
-
-          <div class="tier-out">
-            <div class="tier-pill a-pill">
-              <div>
-                <div class="pill-left-label" style="color:var(--amber);">Assessed</div>
-                <div class="pill-left-sub" id="y1-a-mbrs">—</div>
-              </div>
-              <div class="pill-right-cost" style="color:var(--amber);" id="y1-a-cost">—</div>
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% validated in claims</span>
+              <span class="cslider-val" style="color:var(--green);" id="y1-valid-val">60%</span>
             </div>
-            <div class="tier-pill v-pill">
-              <div>
-                <div class="pill-left-label" style="color:var(--green);">Validated in Claims</div>
-                <div class="pill-left-sub" id="y1-v-mbrs">— <span style="font-size:10px;color:var(--muted);">(subset)</span></div>
-              </div>
-              <div class="pill-right-cost" style="color:var(--green);" id="y1-v-cost">—</div>
-            </div>
+            <input type="range" id="y1-valid" min="10" max="95" value="60" step="1" style="accent-color:var(--green);">
           </div>
-          <div class="year-total-row">
-            <div class="year-total-label">Performance revenue</div>
-            <div class="year-total-val" id="y1-total">—</div>
+        </div>
+        <div class="year-cost-strip">
+          <div class="year-cost-row">
+            <span class="year-cost-lbl" style="color:var(--amber);">Assessed — <span id="y1-a-mbrs">—</span></span>
+            <span class="year-cost-val" style="color:var(--amber);" id="y1-a-cost">—</span>
           </div>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:right;">Original PMPM proposal: $16.8M / yr</div>
+          <div class="year-cost-row">
+            <span class="year-cost-lbl" style="color:var(--green);">Validated — <span id="y1-v-mbrs">—</span></span>
+            <span class="year-cost-val" style="color:var(--green);" id="y1-v-cost">—</span>
+          </div>
+          <div class="year-cost-total">
+            <span class="year-cost-total-lbl">Performance Revenue</span>
+            <span class="year-cost-total-val" id="y1-total">—</span>
+          </div>
         </div>
       </div>
 
-      <!-- Y2 -->
-      <div class="year-card">
-        <div class="year-head">
+      <!-- ── Y2 ── -->
+      <div class="year-compact-card">
+        <div class="year-compact-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div>
-            <div class="year-tag">Year 2 · 2027</div>
-            <div class="year-lives">1.0M</div>
-            <div class="year-lives-sub">MA lives · 2.1M total HCCs</div>
-            <div class="year-lives-sub" style="margin-top:2px;font-size:10px;color:var(--muted);opacity:.7;">(2.1 Avg HCCs Per MA Member)</div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Year 2 · 2027</div>
+            <div class="year-compact-lives">1.0M</div>
+            <div class="year-compact-sub">MA lives · 2.1M total HCCs</div>
+            <div class="year-compact-sub" style="opacity:.55;">(2.1 Avg HCCs Per MA Member)</div>
           </div>
-          <div id="y2-scenario-badge" style="font-size:10px;font-weight:700;color:var(--blue);background:var(--blue-dim);border:1px solid rgba(96,165,250,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Scenario driven</div>
         </div>
-        <div class="year-body">
-
-          <!-- Nat-closed slider → open HCC pool -->
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
-              <span style="font-size:11px;color:var(--muted);">% naturally closed by clinicians</span>
-              <span style="font-size:14px;font-weight:800;" id="y2-strip-nat-closed">70%</span>
+        <div class="year-compact-body">
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% naturally closed by clinicians</span>
+              <span class="cslider-val" style="color:var(--blue);" id="y2-strip-nat-closed">80%</span>
             </div>
-            <input type="range" id="y2-nat-closed-slider" min="50" max="90" value="70" step="1"
-              style="width:100%;accent-color:var(--blue);cursor:pointer;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">
-              <span style="font-size:11px;color:var(--muted);">Open HCCs addressable by Abridge</span>
-              <span style="font-size:15px;font-weight:800;color:var(--blue);" id="y2-strip-open-hcc">630,000</span>
+            <input type="range" id="y2-nat-closed-slider" min="50" max="90" value="80" step="1" style="accent-color:var(--blue);">
+            <div style="display:flex;justify-content:space-between;font-size:9px;margin-top:2px;">
+              <span style="color:var(--green);">60% Opt.</span>
+              <span style="color:var(--blue);">70% Base</span>
+              <span style="color:var(--amber);">80% Cons.</span>
             </div>
+            <div class="cslider-sub">Open HCC pool: <strong style="color:var(--text);" id="y2-strip-open-hcc">420,000</strong></div>
           </div>
-
-          <!-- Capture sliders -->
-          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;">
-            <div class="slider-row" style="margin-bottom:12px;">
-              <div class="slider-top">
-                <span class="slider-label">% open HCCs captured</span>
-                <span class="slider-val" id="y2-assess-val" style="color:var(--amber);">23%</span>
-              </div>
-              <input type="range" class="amber" id="y2-assess" min="5" max="75" value="23" step="1">
-              <div style="font-size:10px;color:var(--muted);margin-top:3px;" id="y2-hcc-line">→ — HCCs captured</div>
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% of open HCCs assessed</span>
+              <span class="cslider-val" style="color:var(--amber);" id="y2-assess-val">23%</span>
             </div>
-            <div class="slider-row" style="margin-bottom:0;">
-              <div class="slider-top">
-                <span class="slider-label">% validated in claims</span>
-                <span class="slider-val" id="y2-valid-val" style="color:var(--green);">65%</span>
-              </div>
-              <input type="range" class="green" id="y2-valid" min="5" max="95" value="65" step="1">
-            </div>
+            <input type="range" id="y2-assess" min="5" max="80" value="23" step="1" style="accent-color:var(--amber);">
+            <div class="cslider-sub" id="y2-hcc-line">→ — HCCs captured</div>
           </div>
-
-          <div class="tier-out">
-            <div class="tier-pill a-pill">
-              <div>
-                <div class="pill-left-label" style="color:var(--amber);">Assessed</div>
-                <div class="pill-left-sub" id="y2-a-mbrs">—</div>
-              </div>
-              <div class="pill-right-cost" style="color:var(--amber);" id="y2-a-cost">—</div>
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% validated in claims</span>
+              <span class="cslider-val" style="color:var(--green);" id="y2-valid-val">55%</span>
             </div>
-            <div class="tier-pill v-pill">
-              <div>
-                <div class="pill-left-label" style="color:var(--green);">Validated in Claims</div>
-                <div class="pill-left-sub" id="y2-v-mbrs">— <span style="font-size:10px;color:var(--muted);">(subset)</span></div>
-              </div>
-              <div class="pill-right-cost" style="color:var(--green);" id="y2-v-cost">—</div>
-            </div>
+            <input type="range" id="y2-valid" min="10" max="95" value="55" step="1" style="accent-color:var(--green);">
           </div>
-          <div class="year-total-row">
-            <div class="year-total-label">Performance revenue</div>
-            <div class="year-total-val" id="y2-total">—</div>
+        </div>
+        <div class="year-cost-strip">
+          <div class="year-cost-row">
+            <span class="year-cost-lbl" style="color:var(--amber);">Assessed — <span id="y2-a-mbrs">—</span></span>
+            <span class="year-cost-val" style="color:var(--amber);" id="y2-a-cost">—</span>
           </div>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:right;">Original PMPM proposal: $84M / yr</div>
+          <div class="year-cost-row">
+            <span class="year-cost-lbl" style="color:var(--green);">Validated — <span id="y2-v-mbrs">—</span></span>
+            <span class="year-cost-val" style="color:var(--green);" id="y2-v-cost">—</span>
+          </div>
+          <div class="year-cost-total">
+            <span class="year-cost-total-lbl">Performance Revenue</span>
+            <span class="year-cost-total-val" id="y2-total">—</span>
+          </div>
         </div>
       </div>
 
-      <!-- Y3 -->
-      <div class="year-card">
-        <div class="year-head">
+      <!-- ── Y3 ── -->
+      <div class="year-compact-card">
+        <div class="year-compact-header" style="display:flex;justify-content:space-between;align-items:flex-start;">
           <div>
-            <div class="year-tag">Year 3 · 2028</div>
-            <div class="year-lives">1.9M</div>
-            <div class="year-lives-sub">MA lives · 4.0M total HCCs</div>
-            <div class="year-lives-sub" style="margin-top:2px;font-size:10px;color:var(--muted);opacity:.7;">(2.1 Avg HCCs Per MA Member)</div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Year 3 · 2028</div>
+            <div class="year-compact-lives">1.9M</div>
+            <div class="year-compact-sub">MA lives · 4.0M total HCCs</div>
+            <div class="year-compact-sub" style="opacity:.55;">(2.1 Avg HCCs Per MA Member)</div>
           </div>
-          <div id="y3-scenario-badge" style="font-size:10px;font-weight:700;color:var(--blue);background:var(--blue-dim);border:1px solid rgba(96,165,250,0.2);padding:2px 7px;border-radius:4px;white-space:nowrap;align-self:flex-start;">Scenario driven</div>
         </div>
-        <div class="year-body">
-
-          <!-- Nat-closed slider → open HCC pool -->
-          <div style="margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
-              <span style="font-size:11px;color:var(--muted);">% naturally closed by clinicians</span>
-              <span style="font-size:14px;font-weight:800;" id="y3-strip-nat-closed">70%</span>
+        <div class="year-compact-body">
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% naturally closed by clinicians</span>
+              <span class="cslider-val" style="color:var(--blue);" id="y3-strip-nat-closed">80%</span>
             </div>
-            <input type="range" id="y3-nat-closed-slider" min="50" max="90" value="70" step="1"
-              style="width:100%;accent-color:var(--blue);cursor:pointer;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;">
-              <span style="font-size:11px;color:var(--muted);">Open HCCs addressable by Abridge</span>
-              <span style="font-size:15px;font-weight:800;color:var(--blue);" id="y3-strip-open-hcc">1,197,000</span>
+            <input type="range" id="y3-nat-closed-slider" min="50" max="90" value="80" step="1" style="accent-color:var(--blue);">
+            <div style="display:flex;justify-content:space-between;font-size:9px;margin-top:2px;">
+              <span style="color:var(--green);">60% Opt.</span>
+              <span style="color:var(--blue);">70% Base</span>
+              <span style="color:var(--amber);">80% Cons.</span>
             </div>
+            <div class="cslider-sub">Open HCC pool: <strong style="color:var(--text);" id="y3-strip-open-hcc">798,000</strong></div>
           </div>
-
-          <!-- Capture sliders -->
-          <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;">
-            <div class="slider-row" style="margin-bottom:12px;">
-              <div class="slider-top">
-                <span class="slider-label">% open HCCs captured</span>
-                <span class="slider-val" id="y3-assess-val" style="color:var(--amber);">33%</span>
-              </div>
-              <input type="range" class="amber" id="y3-assess" min="5" max="75" value="33" step="1">
-              <div style="font-size:10px;color:var(--muted);margin-top:3px;" id="y3-hcc-line">→ — HCCs captured</div>
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% of open HCCs assessed</span>
+              <span class="cslider-val" style="color:var(--amber);" id="y3-assess-val">26%</span>
             </div>
-            <div class="slider-row" style="margin-bottom:0;">
-              <div class="slider-top">
-                <span class="slider-label">% validated in claims</span>
-                <span class="slider-val" id="y3-valid-val" style="color:var(--green);">70%</span>
-              </div>
-              <input type="range" class="green" id="y3-valid" min="5" max="95" value="70" step="1">
-            </div>
+            <input type="range" id="y3-assess" min="5" max="80" value="26" step="1" style="accent-color:var(--amber);">
+            <div class="cslider-sub" id="y3-hcc-line">→ — HCCs captured</div>
           </div>
-
-          <div class="tier-out">
-            <div class="tier-pill a-pill">
-              <div>
-                <div class="pill-left-label" style="color:var(--amber);">Assessed</div>
-                <div class="pill-left-sub" id="y3-a-mbrs">—</div>
-              </div>
-              <div class="pill-right-cost" style="color:var(--amber);" id="y3-a-cost">—</div>
+          <div class="cslider-row">
+            <div class="cslider-header">
+              <span class="cslider-label">% validated in claims</span>
+              <span class="cslider-val" style="color:var(--green);" id="y3-valid-val">60%</span>
             </div>
-            <div class="tier-pill v-pill">
-              <div>
-                <div class="pill-left-label" style="color:var(--green);">Validated in Claims</div>
-                <div class="pill-left-sub" id="y3-v-mbrs">— <span style="font-size:10px;color:var(--muted);">(subset)</span></div>
-              </div>
-              <div class="pill-right-cost" style="color:var(--green);" id="y3-v-cost">—</div>
-            </div>
+            <input type="range" id="y3-valid" min="10" max="95" value="60" step="1" style="accent-color:var(--green);">
           </div>
-          <div class="year-total-row">
-            <div class="year-total-label">Performance revenue</div>
-            <div class="year-total-val" id="y3-total">—</div>
+        </div>
+        <div class="year-cost-strip">
+          <div class="year-cost-row">
+            <span class="year-cost-lbl" style="color:var(--amber);">Assessed — <span id="y3-a-mbrs">—</span></span>
+            <span class="year-cost-val" style="color:var(--amber);" id="y3-a-cost">—</span>
           </div>
-          <div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:right;">Original PMPM proposal: $159.6M / yr</div>
+          <div class="year-cost-row">
+            <span class="year-cost-lbl" style="color:var(--green);">Validated — <span id="y3-v-mbrs">—</span></span>
+            <span class="year-cost-val" style="color:var(--green);" id="y3-v-cost">—</span>
+          </div>
+          <div class="year-cost-total">
+            <span class="year-cost-total-lbl">Performance Revenue</span>
+            <span class="year-cost-total-val" id="y3-total">—</span>
+          </div>
         </div>
       </div>
+    </div>
 
-    </div><!-- /year-grid -->
-
-    <div class="three-yr-strip" style="margin-top:10px;">
-      3-year total &nbsp;·&nbsp; <strong id="total-3yr">—</strong>
+    <!-- 3-year performance revenue total -->
+    <div style="display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:10px;padding:9px 14px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;">
+      <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--amber);">3-Year Performance Revenue</span>
+      <span style="font-size:18px;font-weight:800;letter-spacing:-0.5px;color:var(--amber);" id="total-3yr">—</span>
     </div>
   </div>
 
@@ -706,12 +482,12 @@ function checkPw(){
     <div class="step-label">
       <div class="step-num" style="background:var(--green-dim);color:var(--green);">4</div>
       <div class="step-title" style="color:var(--green);">Value Delivered to Elevance</div>
-      <div class="step-sub">3-year view · applies to all years</div>
+      <div class="step-sub">3-year view · updates live with assumptions above</div>
     </div>
 
-    <!-- ── Unit Economics — shared, persists to all 3 years ── -->
+    <!-- Unit economics -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px;">
-      <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;">Unit Economics — Estimated Value per Validated HCC · Applies to Y1–Y3</div>
+      <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;">Unit Economics — Estimated Value per Validated HCC · Applies to Y1–Y3</div>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:11px;color:var(--muted);">MA benchmark</span>
@@ -719,13 +495,13 @@ function checkPw(){
           <input type="number" id="raf-benchmark" class="rate-num" value="900" min="500" max="2000" step="10" style="width:62px;font-size:14px;">
           <span style="font-size:11px;color:var(--muted);">PMPM</span>
         </div>
-        <div style="color:var(--subtle);font-size:14px;">×</div>
+        <span style="color:var(--subtle);font-size:14px;">×</span>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:11px;color:var(--muted);">Assumed RAF factor</span>
           <input type="number" id="raf-coeff" class="rate-num" value="0.15" min="0.01" max="1.00" step="0.005" style="width:70px;font-size:14px;">
         </div>
-        <div style="color:var(--subtle);font-size:14px;">× 12 =</div>
-        <div style="display:flex;align-items:center;gap:14px;margin-left:4px;">
+        <span style="color:var(--subtle);font-size:14px;">× 12 =</span>
+        <div style="display:flex;align-items:center;gap:16px;margin-left:4px;">
           <div>
             <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">Estimated Value / HCC / Mo</div>
             <div style="font-size:14px;font-weight:700;" id="raf-pmpm">$135</div>
@@ -738,9 +514,76 @@ function checkPw(){
       </div>
     </div>
 
-    <!-- ── Single bar chart — mobile-optimised ── -->
+    <!-- 3 ROI year boxes -->
+    <div class="roi-year-grid">
+
+      <!-- Y1 -->
+      <div class="roi-year-box">
+        <div class="roi-year-box-head" style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y1 · 2026</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:1px;">200K MA lives</div>
+          </div>
+          <div id="scenario-driven-badge" class="scenario-badge" style="display:none;">Scenario driven</div>
+        </div>
+        <div class="roi-year-box-body">
+          <div class="roi-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y1-roi">—</div>
+          <div class="roi-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;margin-bottom:10px;">ROI</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Value to Elevance</div>
+          <div class="roi-val" style="font-size:15px;font-weight:700;margin-bottom:7px;" id="roi-y1-val">—</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Abridge cost</div>
+          <div class="roi-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:7px;" id="roi-y1-cost">—</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
+          <div class="roi-val" style="font-size:13px;font-weight:600;" id="roi-y1-closed">—</div>
+        </div>
+      </div>
+
+      <!-- Y2 -->
+      <div class="roi-year-box">
+        <div class="roi-year-box-head" style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y2 · 2027</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:1px;">1.0M MA lives</div>
+          </div>
+          <div id="y2-scenario-badge" class="scenario-badge" style="display:none;">Scenario driven</div>
+        </div>
+        <div class="roi-year-box-body">
+          <div class="roi-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y2-roi">—</div>
+          <div class="roi-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;margin-bottom:10px;">ROI</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Value to Elevance</div>
+          <div class="roi-val" style="font-size:15px;font-weight:700;margin-bottom:7px;" id="roi-y2-val">—</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Abridge cost</div>
+          <div class="roi-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:7px;" id="roi-y2-cost">—</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
+          <div class="roi-val" style="font-size:13px;font-weight:600;" id="roi-y2-closed">—</div>
+        </div>
+      </div>
+
+      <!-- Y3 -->
+      <div class="roi-year-box">
+        <div class="roi-year-box-head" style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y3 · 2028</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:1px;">1.9M MA lives</div>
+          </div>
+          <div id="y3-scenario-badge" class="scenario-badge" style="display:none;">Scenario driven</div>
+        </div>
+        <div class="roi-year-box-body">
+          <div class="roi-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y3-roi">—</div>
+          <div class="roi-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;margin-bottom:10px;">ROI</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Value to Elevance</div>
+          <div class="roi-val" style="font-size:15px;font-weight:700;margin-bottom:7px;" id="roi-y3-val">—</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Abridge cost</div>
+          <div class="roi-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:7px;" id="roi-y3-cost">—</div>
+          <div class="roi-lbl" style="font-size:10px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
+          <div class="roi-val" style="font-size:13px;font-weight:600;" id="roi-y3-closed">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bar chart -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px 10px;margin-bottom:12px;">
-      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;">Abridge Cost vs. Value to Elevance</div>
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;">Abridge Cost vs. Value to Elevance</div>
       <div style="position:relative;height:160px;">
         <canvas id="roiChart"></canvas>
       </div>
@@ -749,69 +592,8 @@ function checkPw(){
       </div>
     </div>
 
-    <!-- ── 3 compact ROI boxes ── -->
-    <div id="roi-year-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
-
-      <!-- Y1 -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-        <div class="roi-yr-header" style="padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(96,165,250,0.05);">
-          <div class="roi-yr-lbl" style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y1 · 2026</div>
-          <div class="roi-yr-sub" style="font-size:10px;color:var(--muted);margin-top:1px;">200K MA lives</div>
-        </div>
-        <div class="roi-yr-body" style="padding:12px;">
-          <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y1-roi">—</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;">ROI</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-style:italic;margin-bottom:10px;">Based on assumed RAF capture and validation rates</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
-          <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y1-val">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
-          <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y1-cost">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
-          <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y1-closed">—</div>
-        </div>
-      </div>
-
-      <!-- Y2 -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-        <div class="roi-yr-header" style="padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(96,165,250,0.05);">
-          <div class="roi-yr-lbl" style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y2 · 2027</div>
-          <div class="roi-yr-sub" style="font-size:10px;color:var(--muted);margin-top:1px;">1.0M MA lives</div>
-        </div>
-        <div class="roi-yr-body" style="padding:12px;">
-          <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y2-roi">—</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;">ROI</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-style:italic;margin-bottom:10px;">Based on assumed RAF capture and validation rates</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
-          <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y2-val">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
-          <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y2-cost">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
-          <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y2-closed">—</div>
-        </div>
-      </div>
-
-      <!-- Y3 -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-        <div class="roi-yr-header" style="padding:10px 12px;border-bottom:1px solid var(--border);background:rgba(96,165,250,0.05);">
-          <div class="roi-yr-lbl" style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);">Y3 · 2028</div>
-          <div class="roi-yr-sub" style="font-size:10px;color:var(--muted);margin-top:1px;">1.9M MA lives</div>
-        </div>
-        <div class="roi-yr-body" style="padding:12px;">
-          <div class="roi-yr-main" style="font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1;" id="roi-y3-roi">—</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;">ROI</div>
-          <div class="roi-yr-lbl" style="font-size:9px;color:var(--muted);font-style:italic;margin-bottom:10px;">Based on assumed RAF capture and validation rates</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Value</div>
-          <div class="roi-yr-val" style="font-size:15px;font-weight:700;margin-bottom:8px;" id="roi-y3-val">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Cost</div>
-          <div class="roi-yr-val" style="font-size:13px;font-weight:600;color:var(--amber);margin-bottom:8px;" id="roi-y3-cost">—</div>
-          <div class="roi-yr-lbl" style="font-size:11px;color:var(--muted);margin-bottom:2px;">Validated HCCs</div>
-          <div class="roi-yr-val" style="font-size:13px;font-weight:600;" id="roi-y3-closed">—</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── 3-year total strip ── -->
-    <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <!-- 3-year total strip -->
+    <div class="three-yr-strip" style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);">3-Year Total</div>
       <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
         <div>
@@ -832,36 +614,14 @@ function checkPw(){
         </div>
       </div>
     </div>
-
-    <!-- Hidden legacy IDs -->
-    <span id="roi-closed" style="display:none;"></span>
-    <span id="roi-capture" style="display:none;"></span>
-    <span id="roi-valid-pct" style="display:none;"></span>
-    <span id="roi-abridge-full" style="display:none;"></span>
-    <span id="roi-a-mbrs-cnt" style="display:none;"></span>
-    <span id="roi-a-rate-disp" style="display:none;"></span>
-    <span id="roi-a-cost-disp" style="display:none;"></span>
-    <span id="roi-v-mbrs-cnt" style="display:none;"></span>
-    <span id="roi-v-rate-disp" style="display:none;"></span>
-    <span id="roi-v-cost-disp" style="display:none;"></span>
-    <span id="roi-nat-closed" style="display:none;"></span>
-    <span id="roi-open-hcc" style="display:none;"></span>
-    <span id="roi-val" style="display:none;"></span>
-    <span id="roi-mult" style="display:none;"></span>
-    <span id="roi-box" style="display:none;"></span>
-    <span id="roi-abridge-cost" style="display:none;"></span>
-    <span id="roi-box-sub" style="display:none;"></span>
-    <span id="raf-annual-inline" style="display:none;"></span>
-    <span id="roi-hcc-count-disp" style="display:none;"></span>
-    <span id="roi-scale-total" style="display:none;"></span>
   </div>
 
   <!-- ══ STEP 5: CAPTURE FUNNEL ══ -->
   <div class="section">
     <div class="step-label">
       <div class="step-num" style="background:var(--blue-dim);color:var(--blue);">5</div>
-      <div class="step-title" style="color:var(--blue);">How We Get There — Capture Funnel</div>
-      <div class="step-sub">65.4% PCP utilization · 102 EHR-integrated orgs · Hex Data</div>
+      <div class="step-title" style="color:var(--blue);">Capture Funnel</div>
+      <div class="step-sub">HCC pool model · V28 risk adjustment · Y1 · 200K lives</div>
     </div>
     <div class="funnel-row">
       <div class="funnel-step">
@@ -878,36 +638,49 @@ function checkPw(){
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
         <div class="funnel-step-num">Assessed by Abridge</div>
-        <div class="funnel-step-val" style="color:var(--blue);" id="f-assessed">—</div>
+        <div class="funnel-step-val" style="color:var(--amber);" id="f-assessed">—</div>
         <div class="funnel-step-label" id="f-assessed-rate">—% surface rate</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
-        <div class="funnel-step-num">Coded in Visit</div>
-        <div class="funnel-step-val" style="color:var(--amber);" id="f-coded-visit">—</div>
-        <div class="funnel-step-label">All surfaced conditions documented</div>
-      </div>
-      <div class="funnel-arrow">›</div>
-      <div class="funnel-step">
         <div class="funnel-step-num">Validated in Claims</div>
-        <div class="funnel-step-val" style="color:var(--green);" id="f-coded">—</div>
-        <div class="funnel-step-label" id="f-valid-rate">—% downstream validation rate</div>
-      </div>
-      <div class="funnel-arrow">›</div>
-      <div class="funnel-step">
-        <div class="funnel-step-num">Validated HCCs</div>
         <div class="funnel-step-val" style="color:var(--green);" id="f-hcc">—</div>
-        <div class="funnel-step-label">Risk-adjustment value captured</div>
+        <div class="funnel-step-label" id="f-valid-rate">—% downstream validation</div>
       </div>
     </div>
   </div>
 
+  <!-- FOOTER -->
   <div class="footer-note">
-    <strong>Sources:</strong> ROI Framework 2026.04.26 (200K lives, $7 PMPM). PCP utilization 65.35% — Hex Data, 102 EHR-integrated orgs, Apr 2025–Mar 2026.
-    Coded downstream 60% — Elevance claims data (18/32 verified). Top 10 HCC avg V28 coefficient 0.2955, avg annualized $4,077.
+    <strong>Sources:</strong> ROI Framework 2026.04.26 (200K lives, $7 PMPM). Top 10 HCC avg V28 coefficient 0.2955, avg annualized $4,077.
     Kevin Halterman (May 5 2026): claims validation ~50% currently; 95% target for trust threshold.
+    RAF coefficient default 0.15 reflects conservative ambulatory HCC mix under V28 model.
     <em>"One member may not show up at all."</em>
   </div>
+
+  <!-- Hidden legacy spans for JS compatibility -->
+  <span id="roi-nat-closed" style="display:none;"></span>
+  <span id="roi-open-hcc" style="display:none;"></span>
+  <span id="roi-closed" style="display:none;"></span>
+  <span id="roi-val" style="display:none;"></span>
+  <span id="roi-mult" style="display:none;"></span>
+  <span id="roi-box" style="display:none;"></span>
+  <span id="roi-abridge-cost" style="display:none;"></span>
+  <span id="roi-box-sub" style="display:none;"></span>
+  <span id="raf-annual-inline" style="display:none;"></span>
+  <span id="roi-hcc-count-disp" style="display:none;"></span>
+  <span id="roi-scale-total" style="display:none;"></span>
+  <span id="roi-capture" style="display:none;"></span>
+  <span id="roi-valid-pct" style="display:none;"></span>
+  <span id="roi-abridge-full" style="display:none;"></span>
+  <span id="roi-a-mbrs-cnt" style="display:none;"></span>
+  <span id="roi-a-rate-disp" style="display:none;"></span>
+  <span id="roi-a-cost-disp" style="display:none;"></span>
+  <span id="roi-v-mbrs-cnt" style="display:none;"></span>
+  <span id="roi-v-rate-disp" style="display:none;"></span>
+  <span id="roi-v-cost-disp" style="display:none;"></span>
+  <span id="display-aRate" style="display:none;"></span>
+  <span id="display-vRate" style="display:none;"></span>
 
 </div><!-- /page -->
 
@@ -916,63 +689,47 @@ function checkPw(){
 const SC = {
   cons: {
     cssVar:'var(--amber)', boxBg:'rgba(245,158,11,0.1)', boxBorder:'rgba(245,158,11,0.2)',
-    // y1 slider: [hccCapturePct%, validPct%]  y2/y3: [assessPct%, validPct%]
-    sliders: { y1:[27, 60], y2:[23,55], y3:[26,60] },
-    natClosed:'80%', openHccNum:84000, openHcc:'84,000', capture:'26.8%', closed:'22,519', retro:'$30 PMPY',
-    valueDel:56.5, roi:'3.36×', pcpPct:0.50, addrPct:0.50
+    sliders: { y1:[27,60], y2:[27,60], y3:[27,60] }
   },
   base: {
-    cssVar:'var(--blue)',  boxBg:'rgba(96,165,250,0.1)',  boxBorder:'rgba(96,165,250,0.2)',
-    sliders: { y1:[35, 60], y2:[28,65], y3:[33,70] },
-    natClosed:'70%', openHccNum:126000, openHcc:'126,000', capture:'34.9%', closed:'44,000', retro:'$50 PMPY',
-    valueDel:110.3, roi:'6.57×', pcpPct:0.55, addrPct:0.60
+    cssVar:'var(--blue)', boxBg:'rgba(96,165,250,0.1)', boxBorder:'rgba(96,165,250,0.2)',
+    sliders: { y1:[35,60], y2:[35,60], y3:[35,60] }
   },
   opt: {
     cssVar:'var(--green)', boxBg:'rgba(74,222,128,0.1)', boxBorder:'rgba(74,222,128,0.2)',
-    sliders: { y1:[44, 70], y2:[33,75], y3:[40,80] },
-    natClosed:'60%', openHccNum:168000, openHcc:'168,000', capture:'43.6%', closed:'73,178', retro:'$70 PMPY',
-    valueDel:183.5, roi:'10.92×', pcpPct:0.60, addrPct:0.70
+    sliders: { y1:[44,70], y2:[44,70], y3:[44,70] }
   }
 };
 
-const YEARS = [
-  { key:'y1', lives:200000 },
-  { key:'y2', lives:1000000 },
-  { key:'y3', lives:1900000 }
-];
-
 let current = 'cons';
-let chart = null;
+let chart   = null;
 
 function fmtM(n) {
   if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
   if (n >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return '$' + Math.round(n/1e3) + 'K';
+  if (n >= 1e3) return '$' + Math.round(n/1e3)  + 'K';
   return '$' + Math.round(n);
 }
 function fmtN(n) {
   if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return Math.round(n/1e3) + 'K';
+  if (n >= 1e3) return Math.round(n/1e3)   + 'K';
   return Math.round(n).toLocaleString();
 }
 
 function getRates() {
   const aRate = parseFloat(document.getElementById('a-rate-input').value) || 25;
   const vRate = parseFloat(document.getElementById('v-rate-input').value) || 59;
-  const pmpy  = aRate + vRate;
-  return { pmpy, aRate, vRate };
+  return { pmpy: aRate + vRate, aRate, vRate };
 }
 
 function setScenario(s) {
   current = s;
-  // Update tab styles
   ['cons','base','opt'].forEach(k => {
     document.getElementById('tab-' + k).className = 'tab-btn' + (k === s ? ' active-' + k : '');
   });
-  // Snap all three years to scenario defaults
-  const sc = SC[s];
-  const natClosedDefaults = { cons: 80, base: 70, opt: 60 };
-  const nc = natClosedDefaults[s];
+  const sc  = SC[s];
+  const ncMap = { cons:80, base:70, opt:60 };
+  const nc  = ncMap[s];
   // Y1
   document.getElementById('nat-closed-slider').value = nc;
   document.getElementById('y1-assess').value = sc.sliders.y1[0];
@@ -985,7 +742,7 @@ function setScenario(s) {
   document.getElementById('y3-nat-closed-slider').value = nc;
   document.getElementById('y3-assess').value = sc.sliders.y3[0];
   document.getElementById('y3-valid').value  = sc.sliders.y3[1];
-  // Restore all scenario badges
+  // Show all scenario badges
   ['scenario-driven-badge','y2-scenario-badge','y3-scenario-badge'].forEach(id => {
     document.getElementById(id).style.display = '';
   });
@@ -994,14 +751,14 @@ function setScenario(s) {
 
 function recalc() {
   const rates = getRates();
-  const sc = SC[current];
+  const sc    = SC[current];
 
   // ── Pricing header ──
   document.getElementById('pmpy-display').textContent = Math.round(rates.pmpy);
-  const pmpmVal = (rates.pmpy / 12);
+  const pmpmVal = rates.pmpy / 12;
   document.getElementById('pmpy-sub').textContent = '= $' + (Number.isInteger(pmpmVal) ? pmpmVal : pmpmVal.toFixed(2)) + ' PMPM';
 
-  // ── Year 1: HCC-based math (read nat-closed slider directly) ──
+  // ── Year 1 ──
   let total3 = 0;
   const y1NatClosedPct = parseFloat(document.getElementById('nat-closed-slider').value) / 100;
   const openHccs       = Math.round(420000 * (1 - y1NatClosedPct));
@@ -1009,77 +766,69 @@ function recalc() {
   const y1ValidPct     = parseFloat(document.getElementById('y1-valid').value)  / 100;
   const hccsCaptured   = Math.round(openHccs * y1CapturePct);
   const mbrAssessed    = Math.round(hccsCaptured / 2.1);
-  const mbrValidated   = Math.round(mbrAssessed * y1ValidPct);
-  const mbrAssessOnly  = mbrAssessed - mbrValidated;
-
-  document.getElementById('y1-assess-val').textContent    = Math.round(y1CapturePct*100) + '%';
-  document.getElementById('y1-valid-val').textContent     = Math.round(y1ValidPct*100) + '%';
-  document.getElementById('y1-hcc-line').textContent = '→ ' + fmtN(hccsCaptured) + ' HCCs captured';
-
-  // Pricing: all assessed members × aRate; validated subset also × vRate (additional)
+  const mbrValidated   = Math.round(mbrAssessed  * y1ValidPct);
   const hccsValidated  = Math.round(mbrValidated * 2.1);
-  const y1aCost        = mbrAssessed  * rates.aRate;   // all assessed members × assessed rate
-  const y1vCost        = mbrValidated * rates.vRate;   // validated subset × validated rate (additional)
+  const y1aCost        = mbrAssessed  * rates.aRate;
+  const y1vCost        = mbrValidated * rates.vRate;
   const y1total        = y1aCost + y1vCost;
   total3 += y1total;
 
-  document.getElementById('y1-a-mbrs').textContent = fmtN(hccsCaptured) + ' HCCs';
-  document.getElementById('y1-v-mbrs').textContent = fmtN(hccsValidated) + ' HCCs';
-  document.getElementById('y1-a-cost').textContent = fmtM(y1aCost);
-  document.getElementById('y1-v-cost').textContent = fmtM(y1vCost);
-  document.getElementById('y1-total').textContent  = fmtM(y1total);
+  document.getElementById('strip-nat-closed').textContent = Math.round(y1NatClosedPct*100) + '%';
+  document.getElementById('strip-open-hcc').textContent   = openHccs.toLocaleString();
+  document.getElementById('y1-assess-val').textContent    = Math.round(y1CapturePct*100)   + '%';
+  document.getElementById('y1-valid-val').textContent     = Math.round(y1ValidPct*100)     + '%';
+  document.getElementById('y1-hcc-line').textContent      = '→ ' + fmtN(hccsCaptured)     + ' HCCs captured';
+  document.getElementById('y1-a-mbrs').textContent        = fmtN(hccsCaptured) + ' HCCs';
+  document.getElementById('y1-v-mbrs').textContent        = fmtN(hccsValidated) + ' HCCs';
+  document.getElementById('y1-a-cost').textContent        = fmtM(y1aCost);
+  document.getElementById('y1-v-cost').textContent        = fmtM(y1vCost);
+  document.getElementById('y1-total').textContent         = fmtM(y1total);
 
-  // ── Year 2 & 3: HCC-based (independent, each with own nat-closed slider) ──
+  // ── Years 2 & 3 ──
   let y2Cost=0, y2Closed=0, y3Cost=0, y3Closed=0;
   [{ key:'y2', lives:1000000 }, { key:'y3', lives:1900000 }].forEach(({ key, lives }) => {
-    const totalHccsYr  = Math.round(lives * 2.1);
-    const natClosed    = parseFloat(document.getElementById(key + '-nat-closed-slider').value) / 100;
-    const openHccsYr   = Math.round(totalHccsYr * (1 - natClosed));
-    const capturePct   = parseFloat(document.getElementById(key + '-assess').value) / 100;
-    const validPct     = parseFloat(document.getElementById(key + '-valid').value)  / 100;
-    const hccsCapt     = Math.round(openHccsYr * capturePct);
-    const mbrsAss      = Math.round(hccsCapt / 2.1);
-    const mbrsVal      = Math.round(mbrsAss * validPct);
-    const hccsVal      = Math.round(mbrsVal * 2.1);
-    const aCost        = mbrsAss * rates.aRate;
-    const vCost        = mbrsVal * rates.vRate;
-    const total        = aCost + vCost;
+    const totalHccsYr = Math.round(lives * 2.1);
+    const natClosed   = parseFloat(document.getElementById(key+'-nat-closed-slider').value) / 100;
+    const openHccsYr  = Math.round(totalHccsYr * (1 - natClosed));
+    const capturePct  = parseFloat(document.getElementById(key+'-assess').value) / 100;
+    const validPct    = parseFloat(document.getElementById(key+'-valid').value)  / 100;
+    const hccsCapt    = Math.round(openHccsYr  * capturePct);
+    const mbrsAss     = Math.round(hccsCapt    / 2.1);
+    const mbrsVal     = Math.round(mbrsAss     * validPct);
+    const hccsVal     = Math.round(mbrsVal     * 2.1);
+    const aCost       = mbrsAss * rates.aRate;
+    const vCost       = mbrsVal * rates.vRate;
+    const total       = aCost + vCost;
     total3 += total;
 
-    document.getElementById(key + '-strip-nat-closed').textContent = Math.round(natClosed*100) + '%';
-    document.getElementById(key + '-strip-open-hcc').textContent   = openHccsYr.toLocaleString();
-    document.getElementById(key + '-assess-val').textContent       = Math.round(capturePct*100) + '%';
-    document.getElementById(key + '-valid-val').textContent        = Math.round(validPct*100) + '%';
-    document.getElementById(key + '-hcc-line').textContent         = '→ ' + fmtN(hccsCapt) + ' HCCs captured';
-    document.getElementById(key + '-a-mbrs').textContent           = fmtN(hccsCapt) + ' HCCs';
-    document.getElementById(key + '-v-mbrs').textContent           = fmtN(hccsVal)  + ' HCCs';
-    document.getElementById(key + '-a-cost').textContent           = fmtM(aCost);
-    document.getElementById(key + '-v-cost').textContent           = fmtM(vCost);
-    document.getElementById(key + '-total').textContent            = fmtM(total);
+    document.getElementById(key+'-strip-nat-closed').textContent = Math.round(natClosed*100)   + '%';
+    document.getElementById(key+'-strip-open-hcc').textContent   = openHccsYr.toLocaleString();
+    document.getElementById(key+'-assess-val').textContent       = Math.round(capturePct*100)  + '%';
+    document.getElementById(key+'-valid-val').textContent        = Math.round(validPct*100)    + '%';
+    document.getElementById(key+'-hcc-line').textContent         = '→ ' + fmtN(hccsCapt)      + ' HCCs captured';
+    document.getElementById(key+'-a-mbrs').textContent           = fmtN(hccsCapt)  + ' HCCs';
+    document.getElementById(key+'-v-mbrs').textContent           = fmtN(hccsVal)   + ' HCCs';
+    document.getElementById(key+'-a-cost').textContent           = fmtM(aCost);
+    document.getElementById(key+'-v-cost').textContent           = fmtM(vCost);
+    document.getElementById(key+'-total').textContent            = fmtM(total);
     if (key === 'y2') { y2Cost = total; y2Closed = hccsVal; }
     else              { y3Cost = total; y3Closed = hccsVal; }
   });
   document.getElementById('total-3yr').textContent = fmtM(total3);
 
-  // ── Section 4: Unit Economics + 3-year value ──
-  const openHccFmt = openHccs.toLocaleString();
-  document.getElementById('strip-nat-closed').textContent = Math.round(y1NatClosedPct*100) + '%';
-  document.getElementById('strip-open-hcc').textContent   = openHccFmt;
-  document.getElementById('roi-nat-closed').textContent   = Math.round(y1NatClosedPct*100) + '%';
-  document.getElementById('roi-open-hcc').textContent     = openHccFmt;
-
-  const rafBenchmark  = parseFloat(document.getElementById('raf-benchmark').value) || 900;
-  const rafCoeff      = parseFloat(document.getElementById('raf-coeff').value)     || 0.2325;
-  const pmpmPerHcc    = rafBenchmark * rafCoeff;
+  // ── RAF / unit economics ──
+  const rafBenchmark = parseFloat(document.getElementById('raf-benchmark').value) || 900;
+  const rafCoeff     = parseFloat(document.getElementById('raf-coeff').value)     || 0.15;
+  const pmpmPerHcc   = rafBenchmark * rafCoeff;
   const VALUE_PER_HCC = pmpmPerHcc * 12;
 
-  document.getElementById('raf-pmpm').textContent      = '$' + Math.round(pmpmPerHcc);
-  document.getElementById('raf-annual').textContent    = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
-  document.getElementById('fn-benchmark').textContent  = '$' + rafBenchmark;
-  document.getElementById('fn-coeff').textContent      = rafCoeff;
-  document.getElementById('fn-annual').textContent     = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
+  document.getElementById('raf-pmpm').textContent   = '$' + Math.round(pmpmPerHcc);
+  document.getElementById('raf-annual').textContent = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
+  document.getElementById('fn-benchmark').textContent = '$' + rafBenchmark;
+  document.getElementById('fn-coeff').textContent     = rafCoeff;
+  document.getElementById('fn-annual').textContent    = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
 
-  // Per-year value calc — use already-computed hccsValidated (avoids double-rounding drift)
+  // ── Section 3: ROI boxes ──
   const y1Closed = hccsValidated;
   const y1Val    = y1Closed  * VALUE_PER_HCC;
   const y2Val    = y2Closed  * VALUE_PER_HCC;
@@ -1087,131 +836,103 @@ function recalc() {
   const totalClosed = y1Closed + y2Closed + y3Closed;
   const totalCost   = y1total  + y2Cost   + y3Cost;
   const totalVal    = y1Val    + y2Val    + y3Val;
-
-  const roiY1 = y1total > 0 ? y1Val / y1total : 0;
-  const roiY2 = y2Cost  > 0 ? y2Val / y2Cost  : 0;
-  const roiY3 = y3Cost  > 0 ? y3Val / y3Cost  : 0;
+  const roiY1  = y1total > 0 ? y1Val  / y1total : 0;
+  const roiY2  = y2Cost  > 0 ? y2Val  / y2Cost  : 0;
+  const roiY3  = y3Cost  > 0 ? y3Val  / y3Cost  : 0;
   const roi3yr = totalCost > 0 ? totalVal / totalCost : 0;
 
-  // Update metrics table
-  const setROIColor = (id) => { document.getElementById(id).style.color = sc.cssVar; };
+  const setROIColor = id => { document.getElementById(id).style.color = sc.cssVar; };
 
-  document.getElementById('roi-y1-closed').textContent = fmtN(y1Closed);
-  document.getElementById('roi-y2-closed').textContent = fmtN(y2Closed);
-  document.getElementById('roi-y3-closed').textContent = fmtN(y3Closed);
+  document.getElementById('roi-y1-closed').textContent  = fmtN(y1Closed);
+  document.getElementById('roi-y2-closed').textContent  = fmtN(y2Closed);
+  document.getElementById('roi-y3-closed').textContent  = fmtN(y3Closed);
   document.getElementById('roi-3yr-closed').textContent = fmtN(totalClosed);
+  document.getElementById('roi-y1-cost').textContent    = fmtM(y1total);
+  document.getElementById('roi-y2-cost').textContent    = fmtM(y2Cost);
+  document.getElementById('roi-y3-cost').textContent    = fmtM(y3Cost);
+  document.getElementById('roi-3yr-cost').textContent   = fmtM(totalCost);
+  document.getElementById('roi-y1-val').textContent     = fmtM(y1Val);
+  document.getElementById('roi-y2-val').textContent     = fmtM(y2Val);
+  document.getElementById('roi-y3-val').textContent     = fmtM(y3Val);
+  document.getElementById('roi-3yr-val').textContent    = fmtM(totalVal);
+  document.getElementById('roi-y1-roi').textContent     = roiY1.toFixed(1)  + '×';
+  document.getElementById('roi-y2-roi').textContent     = roiY2.toFixed(1)  + '×';
+  document.getElementById('roi-y3-roi').textContent     = roiY3.toFixed(1)  + '×';
+  document.getElementById('roi-3yr-roi').textContent    = roi3yr.toFixed(1) + '×';
 
-  document.getElementById('roi-y1-cost').textContent = fmtM(y1total);
-  document.getElementById('roi-y2-cost').textContent = fmtM(y2Cost);
-  document.getElementById('roi-y3-cost').textContent = fmtM(y3Cost);
-  document.getElementById('roi-3yr-cost').textContent = fmtM(totalCost);
+  ['roi-y1-roi','roi-y2-roi','roi-y3-roi','roi-3yr-roi',
+   'roi-y1-val','roi-y2-val','roi-y3-val','roi-3yr-val'].forEach(setROIColor);
 
-  document.getElementById('roi-y1-val').textContent  = fmtM(y1Val);
-  document.getElementById('roi-y2-val').textContent  = fmtM(y2Val);
-  document.getElementById('roi-y3-val').textContent  = fmtM(y3Val);
-  document.getElementById('roi-3yr-val').textContent = fmtM(totalVal);
-
-  document.getElementById('roi-y1-roi').textContent  = roiY1.toFixed(1)  + '×';
-  document.getElementById('roi-y2-roi').textContent  = roiY2.toFixed(1)  + '×';
-  document.getElementById('roi-y3-roi').textContent  = roiY3.toFixed(1)  + '×';
-  document.getElementById('roi-3yr-roi').textContent = roi3yr.toFixed(1) + '×';
-  ['roi-y1-roi','roi-y2-roi','roi-y3-roi','roi-3yr-roi','roi-y1-val','roi-y2-val','roi-y3-val','roi-3yr-val'].forEach(setROIColor);
-
-  // Update chart
+  // ── Chart ──
   updateChart([y1total/1e6, y2Cost/1e6, y3Cost/1e6], [y1Val/1e6, y2Val/1e6, y3Val/1e6], sc);
 
-  // ── Funnel — fully HCC-pool based, consistent with year card math ──
+  // ── Funnel (Y1, HCC-pool based) ──
   const openPct = Math.round((1 - y1NatClosedPct) * 100);
-  document.getElementById('f-pool').textContent        = fmtN(openHccs);
-  document.getElementById('f-pool-rate').textContent   = openPct + '% not naturally resolved';
-  document.getElementById('f-assessed').textContent    = fmtN(hccsCaptured);
+  document.getElementById('f-pool').textContent          = fmtN(openHccs);
+  document.getElementById('f-pool-rate').textContent     = openPct + '% not naturally resolved';
+  document.getElementById('f-assessed').textContent      = fmtN(hccsCaptured);
   document.getElementById('f-assessed-rate').textContent = Math.round(y1CapturePct*100) + '% surface rate';
-  document.getElementById('f-coded-visit').textContent = fmtN(hccsCaptured);   // all surfaced = all coded
-  document.getElementById('f-coded').textContent       = fmtN(hccsValidated);
-  document.getElementById('f-valid-rate').textContent  = Math.round(y1ValidPct*100) + '% downstream validation rate';
-  document.getElementById('f-hcc').textContent         = fmtN(hccsValidated);
+  document.getElementById('f-hcc').textContent           = fmtN(hccsValidated);
+  document.getElementById('f-valid-rate').textContent    = Math.round(y1ValidPct*100)   + '% downstream validation';
 
-  // ── Scenario tab ROI previews — computed live using current rate/RAF inputs ──
-  const natClosedMap = { cons: 0.80, base: 0.70, opt: 0.60 };
+  // ── Scenario tab ROI previews (live, reflects current rate/RAF) ──
+  const ncMap2 = { cons:0.80, base:0.70, opt:0.60 };
   Object.keys(SC).forEach(key => {
-    const s = SC[key];
-    const nc  = natClosedMap[key];
-    const oH  = Math.round(420000 * (1 - nc));
-    const cap = s.sliders.y1[0] / 100;
-    const val = s.sliders.y1[1] / 100;
-    const hCap = Math.round(oH * cap);
-    const mAss = Math.round(hCap / 2.1);
-    const mVal = Math.round(mAss * val);
-    const hVal = Math.round(mVal * 2.1);
-    const cost = mAss * rates.aRate + mVal * rates.vRate;
-    const value = hVal * VALUE_PER_HCC;
-    const roi = cost > 0 ? (value / cost).toFixed(1) + '×' : '—';
-    document.getElementById('tab-' + key + '-roi').textContent = roi;
+    const s   = SC[key];
+    const oH  = Math.round(420000 * (1 - ncMap2[key]));
+    const hC  = Math.round(oH * s.sliders.y1[0] / 100);
+    const mA  = Math.round(hC / 2.1);
+    const mV  = Math.round(mA * s.sliders.y1[1] / 100);
+    const hV  = Math.round(mV * 2.1);
+    const c   = mA * rates.aRate + mV * rates.vRate;
+    const v   = hV * VALUE_PER_HCC;
+    document.getElementById('tab-' + key + '-roi').textContent = c > 0 ? (v/c).toFixed(1) + '×' : '—';
   });
 
+  // ── Legacy hidden IDs ──
+  document.getElementById('roi-nat-closed').textContent = Math.round(y1NatClosedPct*100) + '%';
+  document.getElementById('roi-open-hcc').textContent   = openHccs.toLocaleString();
 }
 
 function updateChart(costsM, valuesM, sc) {
   const colorMap = {
     'var(--amber)': { full:'rgba(245,158,11,0.85)', dim:'rgba(245,158,11,0.22)' },
-    'var(--blue)':  { full:'rgba(96,165,250,0.85)',  dim:'rgba(96,165,250,0.22)'  },
+    'var(--blue)':  { full:'rgba(96,165,250,0.85)', dim:'rgba(96,165,250,0.22)' },
     'var(--green)': { full:'rgba(74,222,128,0.85)', dim:'rgba(74,222,128,0.22)' }
   };
   const c = colorMap[sc.cssVar];
   const fmtTip = v => v >= 1000 ? '$' + (v/1000).toFixed(1) + 'B' : '$' + v.toFixed(1) + 'M';
-
   const data = {
     labels: ['Y1 · 200K', 'Y2 · 1.0M', 'Y3 · 1.9M'],
     datasets: [
-      {
-        label: 'Abridge Cost',
-        data: costsM,
-        backgroundColor: 'rgba(245,158,11,0.3)',
-        borderColor: 'rgba(245,158,11,0.7)',
-        borderWidth: 1, borderRadius: 4
-      },
-      {
-        label: 'Value to Elevance',
-        data: valuesM,
-        backgroundColor: c.full,
-        borderColor: c.full,
-        borderWidth: 1, borderRadius: 4
-      }
+      { label:'Abridge Cost',      data:costsM,  backgroundColor:'rgba(245,158,11,0.3)', borderColor:'rgba(245,158,11,0.7)', borderWidth:1, borderRadius:4 },
+      { label:'Value to Elevance', data:valuesM, backgroundColor:c.full, borderColor:c.full, borderWidth:1, borderRadius:4 }
     ]
   };
-
-  if (chart) {
-    chart.data = data;
-    chart.update('none');
-    return;
-  }
-
+  if (chart) { chart.data = data; chart.update('none'); return; }
   chart = new Chart(document.getElementById('roiChart').getContext('2d'), {
     type: 'bar', data,
     options: {
-      responsive: true, maintainAspectRatio: false,
+      responsive:true, maintainAspectRatio:false,
       plugins: {
-        legend: { display: true, labels: { color:'#8b949e', font:{ size:11 }, boxWidth:12, padding:16 } },
+        legend: { display:true, labels:{ color:'#8b949e', font:{ size:11 }, boxWidth:12, padding:16 } },
         tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmtTip(ctx.raw) } }
       },
       scales: {
-        x: { grid: { color:'rgba(255,255,255,0.04)' }, ticks: { color:'#8b949e', font:{ size:11, weight:'600' } } },
-        y: { grid: { color:'rgba(255,255,255,0.04)' }, ticks: { color:'#8b949e', font:{ size:11 }, callback: v => v>=1000?'$'+(v/1000).toFixed(0)+'B':'$'+v+'M' }, beginAtZero: true }
+        x: { grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ color:'#8b949e', font:{ size:11, weight:'600' } } },
+        y: { grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ color:'#8b949e', font:{ size:11 }, callback: v => v>=1000?'$'+(v/1000).toFixed(0)+'B':'$'+v+'M' }, beginAtZero:true }
       }
     }
   });
 }
 
-// ── RATE INPUTS ──
+// ── EVENT LISTENERS ──
 document.getElementById('a-rate-input').addEventListener('input', recalc);
 document.getElementById('v-rate-input').addEventListener('input', recalc);
-
-// RAF assumption inputs
 document.getElementById('raf-benchmark').addEventListener('input', recalc);
 document.getElementById('raf-coeff').addEventListener('input', recalc);
 
-// Slider listeners — each year hides only its own badge on manual adjustment
-const badgeIds = { y1: 'scenario-driven-badge', y2: 'y2-scenario-badge', y3: 'y3-scenario-badge' };
+const badgeIds = { y1:'scenario-driven-badge', y2:'y2-scenario-badge', y3:'y3-scenario-badge' };
 ['nat-closed-slider','y1-assess','y1-valid'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
     document.getElementById(badgeIds.y1).style.display = 'none';
