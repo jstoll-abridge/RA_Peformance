@@ -778,8 +778,8 @@ function recalc() {
   document.getElementById('y1-assess-val').textContent    = Math.round(y1CapturePct*100)   + '%';
   document.getElementById('y1-valid-val').textContent     = Math.round(y1ValidPct*100)     + '%';
   document.getElementById('y1-hcc-line').textContent      = '→ ' + fmtN(hccsCaptured)     + ' HCCs captured';
-  document.getElementById('y1-a-mbrs').textContent        = fmtN(hccsCaptured) + ' HCCs';
-  document.getElementById('y1-v-mbrs').textContent        = fmtN(hccsValidated) + ' HCCs';
+  document.getElementById('y1-a-mbrs').textContent        = fmtN(mbrAssessed) + ' members';
+  document.getElementById('y1-v-mbrs').textContent        = fmtN(mbrValidated) + ' members';
   document.getElementById('y1-a-cost').textContent        = fmtM(y1aCost);
   document.getElementById('y1-v-cost').textContent        = fmtM(y1vCost);
   document.getElementById('y1-total').textContent         = fmtM(y1total);
@@ -806,8 +806,8 @@ function recalc() {
     document.getElementById(key+'-assess-val').textContent       = Math.round(capturePct*100)  + '%';
     document.getElementById(key+'-valid-val').textContent        = Math.round(validPct*100)    + '%';
     document.getElementById(key+'-hcc-line').textContent         = '→ ' + fmtN(hccsCapt)      + ' HCCs captured';
-    document.getElementById(key+'-a-mbrs').textContent           = fmtN(hccsCapt)  + ' HCCs';
-    document.getElementById(key+'-v-mbrs').textContent           = fmtN(hccsVal)   + ' HCCs';
+    document.getElementById(key+'-a-mbrs').textContent           = fmtN(mbrsAss)  + ' members';
+    document.getElementById(key+'-v-mbrs').textContent           = fmtN(mbrsVal)  + ' members';
     document.getElementById(key+'-a-cost').textContent           = fmtM(aCost);
     document.getElementById(key+'-v-cost').textContent           = fmtM(vCost);
     document.getElementById(key+'-total').textContent            = fmtM(total);
