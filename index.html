@@ -439,35 +439,32 @@ function checkPw(){
     <div class="scenario-tabs">
       <button class="tab-btn active-cons" id="tab-cons" onclick="setScenario('cons')">
         <span class="tab-name">Conservative</span>
-        <span class="tab-roi">3.36×</span>
+        <span class="tab-roi" id="tab-cons-roi">—</span>
         <span class="tab-sub">ROI · Y1 · 200K lives</span>
         <div style="margin-top:10px;text-align:left;display:flex;flex-direction:column;gap:4px;">
           <span style="font-size:10px;opacity:.75;">80% HCCs naturally closed</span>
-          <span style="font-size:10px;opacity:.75;">50% PCP visit coverage</span>
-          <span style="font-size:10px;opacity:.75;">50% of gaps addressed</span>
-          <span style="font-size:10px;opacity:.75;">26.8% cumulative capture</span>
+          <span style="font-size:10px;opacity:.75;">20% open HCC pool</span>
+          <span style="font-size:10px;opacity:.75;">27% assessed · 60% validated</span>
         </div>
       </button>
       <button class="tab-btn" id="tab-base" onclick="setScenario('base')">
         <span class="tab-name">Base</span>
-        <span class="tab-roi">6.57×</span>
+        <span class="tab-roi" id="tab-base-roi">—</span>
         <span class="tab-sub">ROI · Y1 · 200K lives</span>
         <div style="margin-top:10px;text-align:left;display:flex;flex-direction:column;gap:4px;">
           <span style="font-size:10px;opacity:.75;">70% HCCs naturally closed</span>
-          <span style="font-size:10px;opacity:.75;">55% PCP visit coverage</span>
-          <span style="font-size:10px;opacity:.75;">60% of gaps addressed</span>
-          <span style="font-size:10px;opacity:.75;">34.9% cumulative capture</span>
+          <span style="font-size:10px;opacity:.75;">30% open HCC pool</span>
+          <span style="font-size:10px;opacity:.75;">35% assessed · 60% validated</span>
         </div>
       </button>
       <button class="tab-btn" id="tab-opt" onclick="setScenario('opt')">
         <span class="tab-name">Optimistic</span>
-        <span class="tab-roi">10.92×</span>
+        <span class="tab-roi" id="tab-opt-roi">—</span>
         <span class="tab-sub">ROI · Y1 · 200K lives</span>
         <div style="margin-top:10px;text-align:left;display:flex;flex-direction:column;gap:4px;">
           <span style="font-size:10px;opacity:.75;">60% HCCs naturally closed</span>
-          <span style="font-size:10px;opacity:.75;">60% PCP visit coverage</span>
-          <span style="font-size:10px;opacity:.75;">70% of gaps addressed</span>
-          <span style="font-size:10px;opacity:.75;">43.6% cumulative capture</span>
+          <span style="font-size:10px;opacity:.75;">40% open HCC pool</span>
+          <span style="font-size:10px;opacity:.75;">44% assessed · 70% validated</span>
         </div>
       </button>
     </div>
@@ -868,33 +865,33 @@ function checkPw(){
     </div>
     <div class="funnel-row">
       <div class="funnel-step">
-        <div class="funnel-step-num">Population</div>
+        <div class="funnel-step-num">MA Population</div>
         <div class="funnel-step-val">200K</div>
-        <div class="funnel-step-label">MA members</div>
+        <div class="funnel-step-label">lives · 420K total HCCs</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
-        <div class="funnel-step-num">PCP Visit</div>
-        <div class="funnel-step-val" style="color:var(--blue);" id="f-pcp">—</div>
-        <div class="funnel-step-label" id="f-pcp-rate">—% have a visit</div>
+        <div class="funnel-step-num">Open HCC Pool</div>
+        <div class="funnel-step-val" style="color:var(--blue);" id="f-pool">—</div>
+        <div class="funnel-step-label" id="f-pool-rate">—% not naturally resolved</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
-        <div class="funnel-step-num">Abridge Encounter</div>
-        <div class="funnel-step-val" style="color:var(--blue);" id="f-enc">—</div>
-        <div class="funnel-step-label">70% encounter share</div>
+        <div class="funnel-step-num">Assessed by Abridge</div>
+        <div class="funnel-step-val" style="color:var(--blue);" id="f-assessed">—</div>
+        <div class="funnel-step-label" id="f-assessed-rate">—% surface rate</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
-        <div class="funnel-step-num">Gap Addressed</div>
-        <div class="funnel-step-val" style="color:var(--amber);" id="f-addr">—</div>
-        <div class="funnel-step-label" id="f-addr-rate">—% address rate</div>
+        <div class="funnel-step-num">Coded in Visit</div>
+        <div class="funnel-step-val" style="color:var(--amber);" id="f-coded-visit">—</div>
+        <div class="funnel-step-label">All surfaced conditions documented</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
-        <div class="funnel-step-num">Coded in Claims</div>
+        <div class="funnel-step-num">Validated in Claims</div>
         <div class="funnel-step-val" style="color:var(--green);" id="f-coded">—</div>
-        <div class="funnel-step-label">60% downstream validation rate</div>
+        <div class="funnel-step-label" id="f-valid-rate">—% downstream validation rate</div>
       </div>
       <div class="funnel-arrow">›</div>
       <div class="funnel-step">
@@ -1019,11 +1016,10 @@ function recalc() {
   document.getElementById('y1-valid-val').textContent     = Math.round(y1ValidPct*100) + '%';
   document.getElementById('y1-hcc-line').textContent = '→ ' + fmtN(hccsCaptured) + ' HCCs captured';
 
-  // Pricing: Assessed = all touched members × $42; Validated = subset × $42 (addl)
-  // Totals are mathematically identical to (assess-only × $42) + (validated × $84)
+  // Pricing: all assessed members × aRate; validated subset also × vRate (additional)
   const hccsValidated  = Math.round(mbrValidated * 2.1);
-  const y1aCost        = mbrAssessed  * rates.aRate;   // all assessed × $42
-  const y1vCost        = mbrValidated * rates.aRate;   // validated subset × $42 (additional)
+  const y1aCost        = mbrAssessed  * rates.aRate;   // all assessed members × assessed rate
+  const y1vCost        = mbrValidated * rates.vRate;   // validated subset × validated rate (additional)
   const y1total        = y1aCost + y1vCost;
   total3 += y1total;
 
@@ -1046,7 +1042,7 @@ function recalc() {
     const mbrsVal      = Math.round(mbrsAss * validPct);
     const hccsVal      = Math.round(mbrsVal * 2.1);
     const aCost        = mbrsAss * rates.aRate;
-    const vCost        = mbrsVal * rates.aRate;
+    const vCost        = mbrsVal * rates.vRate;
     const total        = aCost + vCost;
     total3 += total;
 
@@ -1080,11 +1076,11 @@ function recalc() {
   document.getElementById('raf-pmpm').textContent      = '$' + Math.round(pmpmPerHcc);
   document.getElementById('raf-annual').textContent    = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
   document.getElementById('fn-benchmark').textContent  = '$' + rafBenchmark;
-  document.getElementById('fn-coeff').textContent      = rafCoeff.toFixed(4);
+  document.getElementById('fn-coeff').textContent      = rafCoeff;
   document.getElementById('fn-annual').textContent     = '$' + Math.round(VALUE_PER_HCC).toLocaleString();
 
-  // Per-year value calc
-  const y1Closed = Math.round(hccsCaptured * y1ValidPct);
+  // Per-year value calc — use already-computed hccsValidated (avoids double-rounding drift)
+  const y1Closed = hccsValidated;
   const y1Val    = y1Closed  * VALUE_PER_HCC;
   const y2Val    = y2Closed  * VALUE_PER_HCC;
   const y3Val    = y3Closed  * VALUE_PER_HCC;
@@ -1124,19 +1120,34 @@ function recalc() {
   // Update chart
   updateChart([y1total/1e6, y2Cost/1e6, y3Cost/1e6], [y1Val/1e6, y2Val/1e6, y3Val/1e6], sc);
 
-  // ── Funnel — driven by live Y1 values ──
-  const pop      = 200000;
-  const pcp      = Math.round(pop * sc.pcpPct);
-  const enc      = Math.round(pcp * 0.70);
-  const addr     = Math.round(enc * y1CapturePct);   // live Y1 assess% slider
-  const cod      = Math.round(addr * y1ValidPct);    // live Y1 valid% slider
-  document.getElementById('f-pcp').textContent       = fmtN(pcp);
-  document.getElementById('f-pcp-rate').textContent  = Math.round(sc.pcpPct*100) + '% have a visit';
-  document.getElementById('f-enc').textContent       = fmtN(enc);
-  document.getElementById('f-addr').textContent      = fmtN(addr);
-  document.getElementById('f-addr-rate').textContent = Math.round(y1CapturePct*100) + '% address rate';
-  document.getElementById('f-coded').textContent     = fmtN(cod);
-  document.getElementById('f-hcc').textContent       = fmtN(hccsValidated);
+  // ── Funnel — fully HCC-pool based, consistent with year card math ──
+  const openPct = Math.round((1 - y1NatClosedPct) * 100);
+  document.getElementById('f-pool').textContent        = fmtN(openHccs);
+  document.getElementById('f-pool-rate').textContent   = openPct + '% not naturally resolved';
+  document.getElementById('f-assessed').textContent    = fmtN(hccsCaptured);
+  document.getElementById('f-assessed-rate').textContent = Math.round(y1CapturePct*100) + '% surface rate';
+  document.getElementById('f-coded-visit').textContent = fmtN(hccsCaptured);   // all surfaced = all coded
+  document.getElementById('f-coded').textContent       = fmtN(hccsValidated);
+  document.getElementById('f-valid-rate').textContent  = Math.round(y1ValidPct*100) + '% downstream validation rate';
+  document.getElementById('f-hcc').textContent         = fmtN(hccsValidated);
+
+  // ── Scenario tab ROI previews — computed live using current rate/RAF inputs ──
+  const natClosedMap = { cons: 0.80, base: 0.70, opt: 0.60 };
+  Object.keys(SC).forEach(key => {
+    const s = SC[key];
+    const nc  = natClosedMap[key];
+    const oH  = Math.round(420000 * (1 - nc));
+    const cap = s.sliders.y1[0] / 100;
+    const val = s.sliders.y1[1] / 100;
+    const hCap = Math.round(oH * cap);
+    const mAss = Math.round(hCap / 2.1);
+    const mVal = Math.round(mAss * val);
+    const hVal = Math.round(mVal * 2.1);
+    const cost = mAss * rates.aRate + mVal * rates.vRate;
+    const value = hVal * VALUE_PER_HCC;
+    const roi = cost > 0 ? (value / cost).toFixed(1) + '×' : '—';
+    document.getElementById('tab-' + key + '-roi').textContent = roi;
+  });
 
 }
 
